@@ -9,7 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.schmid_charlesa_esig.wakemeup.AlarmActivity">
-
     <TimePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,27 +18,25 @@
         android:id="@+id/timePicker" />
 
     <Button
-        android:text="Set Alarm"
+        android:text="@string/buttonSetAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/timePicker"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/setAlarm"
-        android:onClick="setAlarmButt"/>
+        android:id="@+id/setAlarm"/>
 
     <Button
-        android:text="EndAlarm"
+        android:text="@string/buttonEndAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/timePicker"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/endAlarm"
-        android:onClick="endAlarmButt"/>
+        android:id="@+id/endAlarm"/>
 
     <TextView
-        android:text="Set the alarm first"
+        android:text="@string/legendetext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/endAlarm"

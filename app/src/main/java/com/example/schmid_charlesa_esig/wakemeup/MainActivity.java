@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.Locale;
+
+import android.widget.Switch;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -28,6 +33,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         textToRead=(EditText)findViewById(R.id.editText);
         listener=(Button)findViewById(R.id.button);
         gotoAlarm=(Button)findViewById(R.id.AlarmPageButton);
@@ -41,8 +47,6 @@ public class MainActivity extends Activity {
                 }else{
                     System.out.println("Pas de connection");
                 }
-
-
             }
         });
 
@@ -51,10 +55,10 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 String toSpeak = textToRead.getText().toString();
-                textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                GlobalVar.setVarNameUser(textToRead.getText().toString());
+                textToSpeech.speak(GlobalVar.getVarNameUser(), TextToSpeech.QUEUE_FLUSH, null);
 
                 Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
-                GlobalVar.setVarNameUser(textToRead.getText().toString());
                 System.out.println(GlobalVar.getVarNameUser());
             }
         });
@@ -67,5 +71,23 @@ public class MainActivity extends Activity {
             System.out.println("LA");
         }
         super.onPause();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menualarm,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.parameters:
+                startActivity(new Intent(this,MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
