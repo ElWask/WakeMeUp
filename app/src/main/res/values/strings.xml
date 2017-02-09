@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WakeMeUp</string>
+    <string name="start_note">sart notif</string>
+    <string name="cancel_note">cancel notif</string>
+    <string name="update_note">update notif</string>
+    <string name="big_notification">big notif</string>
+</resources>
