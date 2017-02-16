@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import java.util.Locale;
 
-import android.widget.Switch;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -25,7 +24,7 @@ public class MainActivity extends Activity {
         startActivity(i);
     }
     public void gotoNotif(View view){
-        Intent i = new Intent(this,NotifActivity.class);
+        Intent i = new Intent(this,TodoListActivity.class);
         startActivity(i);
     }
 
@@ -54,8 +53,8 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                String toSpeak = textToRead.getText().toString();
                 GlobalVar.setVarNameUser(textToRead.getText().toString());
+                String toSpeak = GlobalVar.getVarNameUser();
                 textToSpeech.speak(GlobalVar.getVarNameUser(), TextToSpeech.QUEUE_FLUSH, null);
 
                 Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
