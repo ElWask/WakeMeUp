@@ -27,8 +27,8 @@
             android:name=".RingtonePlayingService"
             android:enabled="true" />
 
-        <activity android:name=".TodoListActivity"/>
-        <uses-permission android:name="android.permission.INTERNET"/>
-    </application>
+        <activity android:name=".TodoListActivity" android:label="Task of the day"/>
+
+        </application>
 
 </manifest>

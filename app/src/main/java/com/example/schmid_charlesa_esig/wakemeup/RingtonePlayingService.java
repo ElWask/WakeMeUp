@@ -37,7 +37,7 @@ public class RingtonePlayingService extends Service {
 //        fetch the extra String values
         String state = intent.getExtras().getString("extra");
 
-        Log.e("Ringtone state : extra is ", state);
+        Log.e("Ringtone state extra: ", state);
 
 
 //        this convert the extra string to the intent to the value 0 or 1
