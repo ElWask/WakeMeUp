@@ -19,6 +19,8 @@ public class MainActivity extends Activity {
     EditText textToRead;
     Button listener,gotoAlarm;
 
+    DataBaseHelper myDb;
+
     public void gotoAlarm(View view){
         Intent i = new Intent(this,AlarmActivity.class);
         startActivity(i);
@@ -61,6 +63,8 @@ public class MainActivity extends Activity {
                 System.out.println(GlobalVar.getVarNameUser());
             }
         });
+
+        myDb = new DataBaseHelper(this);
     }
 
     public void onPause(){

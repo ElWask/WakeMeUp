@@ -5,7 +5,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import java.util.Calendar;
-import java.util.Locale;
 
 import android.content.Intent;
 import android.os.Build;
@@ -19,12 +18,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+
 public class AlarmActivity extends AppCompatActivity {
     AlarmManager alarmManager;
     TimePicker timePicker;
     TextView updateText;
     Context context;
     PendingIntent pendingIntent;
+    Intent myIntent;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,6 +111,9 @@ public class AlarmActivity extends AppCompatActivity {
                 sendBroadcast(monIntent);
             }
         });
+
+        myIntent = getIntent(); // gets the previously created intent
+        updateText(myIntent.getStringExtra("nameTrans"));
     }
     private void updateText(String s) {
         updateText.setText(s);

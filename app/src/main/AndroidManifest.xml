@@ -9,7 +9,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -27,8 +26,11 @@
             android:name=".RingtonePlayingService"
             android:enabled="true" />
 
-        <activity android:name=".TodoListActivity" android:label="Task of the day"/>
-
-        </application>
+        <activity
+            android:name=".TodoListActivity"
+            android:label="Task of the day" />
+        <activity android:name=".SetTaskActivity" />
+        <activity android:name=".TaskBoardActivity"></activity>
+    </application>
 
 </manifest>

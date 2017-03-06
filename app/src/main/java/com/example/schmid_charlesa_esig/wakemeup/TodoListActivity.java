@@ -1,38 +1,51 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class TodoListActivity extends AppCompatActivity {
     ListView listView;
-    int[] item_resource = {
-            R.drawable.binarytree,
-            R.drawable.alarmicon,
-            R.drawable.alcoliqueanon,
-            R.drawable.charlyschmid,
+    ArrayAdapter adapter;
+    String [] toDoListName = {
+            "Eat a fondue",
+            "Go to Laponia",
+            "Go to the medical",
+            "Visit Wask"
     };
-
-    String [] title_resource;
-    String[] desc_resource;
-    TodoAdapter adapter;
+    String [] toDoListDesc = {
+            "Buy cheese, bread, white wine and bread gf hrwoie hoighowterhgitrwhoiehiughteroiuwhzterwgphterwgouherioihpoerwqhfrehiuff7uck",
+            "Buy tickets, plan a journey",
+            "Cause your liver is dying",
+            "Surprise"
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todolist);
 
-        title_resource = getResources().getStringArray(R.array.todo_titles);
-        desc_resource = getResources().getStringArray(R.array.todo_desc);
         listView =(ListView) findViewById(R.id.listViewTodo);
-        int i=0 ;
-        adapter = new TodoAdapter(getApplicationContext(),R.layout.row_layout);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,toDoListName);
         listView.setAdapter(adapter);
-        for (String titles :title_resource){
-            TodoDataProvider dataProvider = new TodoDataProvider(item_resource[i],titles,desc_resource[i]);
-            adapter.add(dataProvider);
-            i++;
-        }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getBaseContext(),adapterView.getItemAtPosition(i)+"is selected",Toast.LENGTH_SHORT).show();
+
+                Intent myIntent = new Intent(getApplicationContext(), SetTaskActivity.class);
+
+                myIntent.putExtra("nameTrans",adapterView.getItemAtPosition(i).toString());
+                myIntent.putExtra("descTrans",toDoListDesc[i]);
+                startActivity(myIntent);
+            }
+        });
     }
 
 }

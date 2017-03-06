@@ -14,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 /**
@@ -36,7 +37,7 @@ public class RingtonePlayingService extends Service {
 
 //        fetch the extra String values
         String state = intent.getExtras().getString("extra");
-
+        String title = intent.getExtras().getString("titleNotif");
         Log.e("Ringtone state extra: ", state);
 
 
@@ -70,11 +71,10 @@ public class RingtonePlayingService extends Service {
 //Set up pending intent
             PendingIntent pendingIntentAlarmActivity = PendingIntent.getActivity(this, 0, intentAlarmActivity,0);
 //         Make the notification parameters
-
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.alarmicon)
-                            .setContentTitle("My notification")
+                            .setContentTitle(title)
                             .setContentText("Hello World!");
 // Creates an explicit intent for an Activity in your app
             Intent resultIntent = new Intent(this, AlarmActivity.class);
