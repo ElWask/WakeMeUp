@@ -68,4 +68,13 @@
         android:id="@+id/button2"
         android:onClick="gotoNotif" />
 
+    <Button
+        android:text="gotoTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gotoTask"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="gotoTask" />
+
 </RelativeLayout>

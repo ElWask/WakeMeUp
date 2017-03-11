@@ -30,7 +30,8 @@
             android:name=".TodoListActivity"
             android:label="Task of the day" />
         <activity android:name=".SetTaskActivity" />
-        <activity android:name=".TaskBoardActivity"></activity>
+        <activity android:name=".TaskBoardActivity" />
+        <activity android:name=".TodoList2Activity"></activity>
     </application>
 
 </manifest>

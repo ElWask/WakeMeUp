@@ -9,18 +9,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.List;
 import java.util.Locale;
 
+import android.widget.ListView;
 import android.widget.Toast;
+
+
+
 
 public class MainActivity extends Activity {
     TextToSpeech textToSpeech;
     EditText textToRead;
     Button listener,gotoAlarm;
+
 
     public void gotoAlarm(View view){
         Intent i = new Intent(this,AlarmActivity.class);
@@ -28,6 +34,11 @@ public class MainActivity extends Activity {
     }
     public void gotoNotif(View view){
         Intent i = new Intent(this,TodoListActivity.class);
+        startActivity(i);
+    }
+    public void gotoTask(View view){
+
+        Intent i = new Intent(this,TodoList2Activity.class);
         startActivity(i);
     }
 

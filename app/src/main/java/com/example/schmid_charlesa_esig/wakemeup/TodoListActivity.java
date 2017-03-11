@@ -41,6 +41,7 @@ public class TodoListActivity extends AppCompatActivity {
 
                 Intent myIntent = new Intent(getApplicationContext(), SetTaskActivity.class);
 
+                //myIntent.putExtra("nameTrans",adapterView.getItemAtPosition(i).toString());
                 myIntent.putExtra("nameTrans",adapterView.getItemAtPosition(i).toString());
                 myIntent.putExtra("descTrans",toDoListDesc[i]);
                 startActivity(myIntent);
