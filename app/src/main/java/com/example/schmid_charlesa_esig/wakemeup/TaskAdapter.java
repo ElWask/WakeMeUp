@@ -32,18 +32,25 @@ public class TaskAdapter extends ArrayAdapter<TaskData> {
             viewHolder = new TaskViewHolder();
             viewHolder.title = (TextView) convertView.findViewById(R.id.todoTitle);
             viewHolder.desc = (TextView) convertView.findViewById(R.id.todoDesc);
+            viewHolder.date = (TextView) convertView.findViewById(R.id.todoDate);
+            viewHolder.hour = (TextView) convertView.findViewById(R.id.todoHour);
+            viewHolder.minute = (TextView) convertView.findViewById(R.id.todoMinute);
             convertView.setTag(viewHolder);
         }
-        //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
+        //getItem(position) va récupérer l'item [position] de la List<Task> tasks
         System.out.println(
                 getItem(position)
         );
         TaskData task = getItem(position);
 
-
         //il ne reste plus qu'à remplir notre vue
         viewHolder.title.setText(task.getName());
         viewHolder.desc.setText(task.getDesc());
+//        viewHolder.date.setText(task.getDate());
+  //      viewHolder.hour.setText(0);
+//        viewHolder.date.setText(task.getDate());
+//        viewHolder.hour.setText(task.getHour());
+//        viewHolder.minute.setText(task.getMinute());
 
         return convertView;
     }
@@ -51,5 +58,8 @@ public class TaskAdapter extends ArrayAdapter<TaskData> {
     private class TaskViewHolder {
         public TextView title;
         public TextView desc;
+        public TextView date;
+        public TextView hour;
+        public TextView minute;
     }
 }

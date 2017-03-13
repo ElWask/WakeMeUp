@@ -17,13 +17,41 @@
         android:layout_below="@id/todoTitle"
         android:text="Problem with connection to the database"
         android:textSize="20sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/todoDate"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="Hi"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/todoHour"
+        android:layout_below="@id/todoDate"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="Heure"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/todoMinute"
+        android:layout_below="@id/todoDate"
+        android:layout_toRightOf="@id/todoHour"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="Min"
+        android:textSize="20sp"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/todoDelete"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@id/todoHour"
+        android:layout_alignParentBottom="true"
         android:onClick="deleteTask"
+        android:layout_centerHorizontal="true"
         android:text="Done"/>
 
 </RelativeLayout>

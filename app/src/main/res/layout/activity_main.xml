@@ -59,22 +59,23 @@
         android:onClick="gotoAlarm"/>
 
     <Button
-        android:text="GO TO NOTIF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/AlarmPageButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:id="@+id/button2"
-        android:onClick="gotoNotif" />
-
-    <Button
         android:text="gotoTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gotoTask"
+        android:onClick="gotoTask"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="gotoTask" />
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:text="gotoSwipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gotoSwipe"
+        android:layout_above="@+id/gotoTask"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="gotoSwipe" />
 
 </RelativeLayout>

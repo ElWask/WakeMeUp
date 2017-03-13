@@ -28,7 +28,10 @@ public class TodoHelper extends SQLiteOpenHelper{
         String createTable = "CREATE TABLE " + Todo.TodoEntry.TABLE + "("+
                 Todo.TodoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Todo.TodoEntry.COL_TASK_TITLE + " TEXT NOT NULL, " +
-                Todo.TodoEntry.COL_TASK_DESC + " TEXT NOT NULL);";
+                Todo.TodoEntry.COL_TASK_DESC + " TEXT NOT NULL, " +
+                Todo.TodoEntry.COL_TASK_DATE + " TEXT NOT NULL, " +
+                Todo.TodoEntry.COL_TASK_HOUR + " TEXT NOT NULL, " +
+                Todo.TodoEntry.COL_TASK_MIN + " TEXT NOT NULL);";
         sqLiteDatabase.execSQL(createTable);
     }
 
@@ -65,7 +68,9 @@ public class TodoHelper extends SQLiteOpenHelper{
                 data.setID(Integer.parseInt(cursor.getString(0)));
                 data.setName(cursor.getString(1));
                 data.setDesc(cursor.getString(2));
-
+//                data.setDate(cursor.getInt(3));
+//                data.setHour(cursor.getInt(4));
+//                data.setMinute(cursor.getInt(5));
 
                 // Adding contact to list
                 taskList.add(data);

@@ -29,9 +29,7 @@
         <activity
             android:name=".TodoListActivity"
             android:label="Task of the day" />
-        <activity android:name=".SetTaskActivity" />
-        <activity android:name=".TaskBoardActivity" />
-        <activity android:name=".TodoList2Activity"></activity>
+        <activity android:name=".SwipeActivity"/>
     </application>
 
 </manifest>

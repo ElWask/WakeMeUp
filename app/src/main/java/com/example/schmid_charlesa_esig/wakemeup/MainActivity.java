@@ -4,19 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.List;
 import java.util.Locale;
 
-import android.widget.ListView;
 import android.widget.Toast;
 
 
@@ -32,13 +28,14 @@ public class MainActivity extends Activity {
         Intent i = new Intent(this,AlarmActivity.class);
         startActivity(i);
     }
-    public void gotoNotif(View view){
+    public void gotoTask(View view){
+
         Intent i = new Intent(this,TodoListActivity.class);
         startActivity(i);
     }
-    public void gotoTask(View view){
+    public void gotoSwipe(View view){
 
-        Intent i = new Intent(this,TodoList2Activity.class);
+        Intent i = new Intent(this,SwipeActivity.class);
         startActivity(i);
     }
 
@@ -104,34 +101,4 @@ public class MainActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
- //   public class AndroidSqliteExample extends Activity {
-
-       // @Override
-       // protected void onCreate(Bundle savedInstanceState) {
-//            /******************* Intialize Database *************/
-//            DBAdapter.init(this);
-//
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.activity_main);
-//
-//
-//            // Inserting Contacts
-//            Log.d("Insert: ", "Inserting ..");
-//            DBAdapter.addTaskData(new TaskData("Ravi", "9100000000"));
-//            DBAdapter.addTaskData(new TaskData("Srinivas", "9199999999"));
-//            DBAdapter.addTaskData(new TaskData("Tommy", "9522222222"));
-//            DBAdapter.addTaskData(new TaskData("Karthik", "9533333333"));
-//
-//            // Reading all contacts
-//            Log.d("Reading: ", "Reading all contacts..");
-//            List<TaskData> data = DBAdapter.getAllTaskData();
-//
-//            for (TaskData dt : data) {
-//                String log = "Id: "+dt.getID()+" ,Name: " + dt.getName() + " ,Phone: " + dt.getDesc();
-//                // Writing Contacts to log
-//                Log.d("Name: ", log);
-//            }
-
-  //      }
-  //  }
 }
