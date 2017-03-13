@@ -6,9 +6,9 @@ package com.example.schmid_charlesa_esig.wakemeup;
 
 public class TaskData {
     //private variables
-    int _id;
-    String _title;
-    String _desc;
+    int id;
+    String title;
+    String desc;
 
     // Empty constructor
     public TaskData(){
@@ -18,46 +18,46 @@ public class TaskData {
 
     // constructor
     public TaskData(int id, String name, String email){
-        this._id = id;
-        this._title = name;
-        this._desc = email;
+        this.id = id;
+        this.title = name;
+        this.desc = email;
     }
 
     // constructor
     public TaskData(String name, String email){
-        this._title = name;
-        this._desc = email;
+        this.title = name;
+        this.desc = email;
     }
 
 
     // getting ID
     public int getID(){
-        return this._id;
+        return this.id;
     }
 
     // setting id
     public void setID(int id){
-        this._id = id;
+        this.id = id;
     }
 
     // getting name
     public String getName(){
-        return this._title;
+        return this.title;
     }
 
     // setting name
     public void setName(String name){
-        this._title = name;
+        this.title = name;
     }
 
-    // getting email
-    public String getEmail(){
-        return this._desc;
+    // getting desc
+    public String getDesc(){
+        return this.desc;
     }
 
-    // setting email
-    public void setEmail(String email){
-        this._desc = email;
+    // setting desc
+    public void setDesc(String desc){
+        this.desc = desc;
     }
 
     /* (non-Javadoc)
@@ -65,7 +65,7 @@ public class TaskData {
      */
     @Override
     public String toString() {
-        return "TaskInfo [name=" + _title + ", email=" + _desc + "]";
+        return "TaskInfo [name=" + title + ", desc=" + desc + "]";
     }
 
 }

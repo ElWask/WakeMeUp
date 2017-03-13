@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DBAdapter.init(this);
+        //DBAdapter.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -104,34 +104,34 @@ public class MainActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public class AndroidSqliteExample extends Activity {
+ //   public class AndroidSqliteExample extends Activity {
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            /******************* Intialize Database *************/
-            DBAdapter.init(this);
+       // @Override
+       // protected void onCreate(Bundle savedInstanceState) {
+//            /******************* Intialize Database *************/
+//            DBAdapter.init(this);
+//
+//            super.onCreate(savedInstanceState);
+//            setContentView(R.layout.activity_main);
+//
+//
+//            // Inserting Contacts
+//            Log.d("Insert: ", "Inserting ..");
+//            DBAdapter.addTaskData(new TaskData("Ravi", "9100000000"));
+//            DBAdapter.addTaskData(new TaskData("Srinivas", "9199999999"));
+//            DBAdapter.addTaskData(new TaskData("Tommy", "9522222222"));
+//            DBAdapter.addTaskData(new TaskData("Karthik", "9533333333"));
+//
+//            // Reading all contacts
+//            Log.d("Reading: ", "Reading all contacts..");
+//            List<TaskData> data = DBAdapter.getAllTaskData();
+//
+//            for (TaskData dt : data) {
+//                String log = "Id: "+dt.getID()+" ,Name: " + dt.getName() + " ,Phone: " + dt.getDesc();
+//                // Writing Contacts to log
+//                Log.d("Name: ", log);
+//            }
 
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-
-
-            // Inserting Contacts
-            Log.d("Insert: ", "Inserting ..");
-            DBAdapter.addTaskData(new TaskData("Ravi", "9100000000"));
-            DBAdapter.addTaskData(new TaskData("Srinivas", "9199999999"));
-            DBAdapter.addTaskData(new TaskData("Tommy", "9522222222"));
-            DBAdapter.addTaskData(new TaskData("Karthik", "9533333333"));
-
-            // Reading all contacts
-            Log.d("Reading: ", "Reading all contacts..");
-            List<TaskData> data = DBAdapter.getAllTaskData();
-
-            for (TaskData dt : data) {
-                String log = "Id: "+dt.getID()+" ,Name: " + dt.getName() + " ,Phone: " + dt.getEmail();
-                // Writing Contacts to log
-                Log.d("Name: ", log);
-            }
-
-        }
-    }
+  //      }
+  //  }
 }
