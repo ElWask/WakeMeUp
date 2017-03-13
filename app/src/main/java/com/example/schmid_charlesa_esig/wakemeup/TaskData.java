@@ -9,26 +9,16 @@ public class TaskData {
     int id;
     String title;
     String desc;
-
-    // Empty constructor
+    // empty constructor
     public TaskData(){
-
     }
 
-
     // constructor
-    public TaskData(int id, String name, String email){
+    public TaskData(int id, String name, String desc){
         this.id = id;
         this.title = name;
-        this.desc = email;
+        this.desc = desc;
     }
-
-    // constructor
-    public TaskData(String name, String email){
-        this.title = name;
-        this.desc = email;
-    }
-
 
     // getting ID
     public int getID(){
@@ -60,9 +50,6 @@ public class TaskData {
         this.desc = desc;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return "TaskInfo [name=" + title + ", desc=" + desc + "]";

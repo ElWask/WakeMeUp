@@ -24,7 +24,7 @@ public class TaskAdapter extends ArrayAdapter<TaskData> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_todo_list2,parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_todo,parent, false);
         }
 
         TaskViewHolder viewHolder = (TaskViewHolder) convertView.getTag();
@@ -34,14 +34,16 @@ public class TaskAdapter extends ArrayAdapter<TaskData> {
             viewHolder.desc = (TextView) convertView.findViewById(R.id.todoDesc);
             convertView.setTag(viewHolder);
         }
-
         //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
+        System.out.println(
+                getItem(position)
+        );
         TaskData task = getItem(position);
+
 
         //il ne reste plus qu'à remplir notre vue
         viewHolder.title.setText(task.getName());
         viewHolder.desc.setText(task.getDesc());
-        // viewHolder.avatar.setImageDrawable(new ColorDrawable(tweet.getColor()));
 
         return convertView;
     }

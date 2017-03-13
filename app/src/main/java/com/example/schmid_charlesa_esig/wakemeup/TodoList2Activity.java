@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,10 @@ import android.widget.TextView;
 import com.example.schmid_charlesa_esig.wakemeup.bdd.Todo;
 import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class TodoList2Activity extends AppCompatActivity {
 
@@ -148,19 +152,18 @@ public class TodoList2Activity extends AppCompatActivity {
         while (cursorName.moveToNext()){
             int index = cursorName.getColumnIndex(Todo.TodoEntry.COL_TASK_TITLE);
             todoListName.add(cursorName.getString(index));
-            System.out.println(cursorName.getString(index));
         }
         while (cursorDesc.moveToNext()){
             int index = cursorDesc.getColumnIndex(Todo.TodoEntry.COL_TASK_DESC);
             todoListDesc.add(cursorDesc.getString(index));
-            System.out.println(cursorDesc.getString(index));
         }
         if (mAdapterName == null){
             List<TaskData> tasks = genererTasks();
             TaskAdapter taskAdapter = new TaskAdapter(TodoList2Activity.this, tasks);
-
-            mAdapterName = new ArrayAdapter<String>(this, R.layout.item_todo, R.id.todoTitle);
-            mTodoListView.setAdapter(mAdapterName);
+            /*http://androidexample.com/SQLite_Database_Manipulation_Class_-_Android_Example/index.php?view=article_discription&aid=51&aaid=76*/
+           // mAdapterName = new ArrayAdapter<String>(this, R.layout.item_todo, R.id.todoTitle);
+            mTodoListView.setAdapter(taskAdapter);
+            taskAdapter.notifyDataSetChanged();
         }else {
             mAdapterName.clear();
             mAdapterName.addAll(todoListName);
@@ -185,8 +188,19 @@ public class TodoList2Activity extends AppCompatActivity {
 
     public List<TaskData> genererTasks() {
        // A CONTINUER SUR http://stackoverflow.com/questions/10111166/get-all-rows-from-sqlite
-        // taskList = new List<String>();
-        return null;
+
+        List<TaskData> taskDataList = new ArrayList<TaskData>();
+
+//        taskDataList.add(new TaskData(0,"Florent", "Mon premier tweet !"));
+//        taskDataList.add(new TaskData(1,"Kevin", "C'est ici que ça se passe !"));
+//        taskDataList.add(new TaskData(2,"Logan", "Que c'est beau..."));
+//        taskDataList.add(new TaskData(3,"Mathieu", "Il est quelle heure ??"));
+//        taskDataList.add(new TaskData(4,"Willy", "On y est presque"));
+
+        TodoHelper.init(TodoList2Activity.this);
+        taskDataList = TodoHelper.getAllUserData();
+
+        return taskDataList;
     }
 
     public void deleteTask(View view){
@@ -198,5 +212,6 @@ public class TodoList2Activity extends AppCompatActivity {
         db.close();
         updateUI();
     }
+
 
 }
