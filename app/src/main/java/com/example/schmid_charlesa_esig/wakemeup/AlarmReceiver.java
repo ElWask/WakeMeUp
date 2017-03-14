@@ -20,7 +20,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent serviceIntent = new Intent(context,RingtonePlayingService.class);
 //      pass the extra string from alarmAct to the RingtonePlayingService
         serviceIntent.putExtra("extra", getString);
-
         serviceIntent.putExtra("titleNotif", "Titre à connecter");
 
         context.startService(serviceIntent);

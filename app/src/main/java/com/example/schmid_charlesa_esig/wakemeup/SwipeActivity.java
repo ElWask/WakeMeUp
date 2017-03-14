@@ -55,6 +55,8 @@ public class SwipeActivity extends AppCompatActivity {
 
     private void init() {
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         languagesarraylist = new ArrayList<>();
 
         //adding few data to arraylist

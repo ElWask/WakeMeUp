@@ -46,11 +46,9 @@ public class TaskAdapter extends ArrayAdapter<TaskData> {
         //il ne reste plus qu'à remplir notre vue
         viewHolder.title.setText(task.getName());
         viewHolder.desc.setText(task.getDesc());
-//        viewHolder.date.setText(task.getDate());
-  //      viewHolder.hour.setText(0);
-//        viewHolder.date.setText(task.getDate());
-//        viewHolder.hour.setText(task.getHour());
-//        viewHolder.minute.setText(task.getMinute());
+        viewHolder.date.setText(String.valueOf(task.getDate()));
+        viewHolder.hour.setText(String.valueOf(task.getHour()));
+        viewHolder.minute.setText(String.valueOf(task.getMinute()));
 
         return convertView;
     }

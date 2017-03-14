@@ -55,6 +55,7 @@ public class MainActivity extends Activity {
                 if(status != TextToSpeech.ERROR) {
                     textToSpeech.setLanguage(Locale.FRENCH);
                     System.out.println("Trouve french pour connection");
+                    //textToSpeech.speak(GlobalVar.getVarNameUser(), TextToSpeech.QUEUE_FLUSH,null);
                 }else{
                     System.out.println("Pas de connection");
                 }

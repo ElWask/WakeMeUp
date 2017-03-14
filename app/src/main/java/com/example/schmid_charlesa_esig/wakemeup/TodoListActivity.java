@@ -116,7 +116,7 @@ public class TodoListActivity extends AppCompatActivity {
                                 ContentValues values = new ContentValues();
                                 values.put(Todo.TodoEntry.COL_TASK_TITLE, taskTitle);
                                 values.put(Todo.TodoEntry.COL_TASK_DESC, taskDesc);
-                                values.put(Todo.TodoEntry.COL_TASK_DATE, "0");
+                                values.put(Todo.TodoEntry.COL_TASK_DATE, 0);
                                 values.put(Todo.TodoEntry.COL_TASK_HOUR, 0);
                                 values.put(Todo.TodoEntry.COL_TASK_MIN, 0);
                                 db.insertWithOnConflict(Todo.TodoEntry.TABLE, null,values,SQLiteDatabase.CONFLICT_REPLACE);
