@@ -1,6 +1,7 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,6 +17,11 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+
+import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SCHMID_CHARLESA-ESIG on 30.01.2017.
@@ -66,18 +72,24 @@ public class RingtonePlayingService extends Service {
             this.startID = 0;
 
 //        notification
+            List<TaskData> taskDataList;
+            taskDataList = TodoHelper.getAllUserDataWhenTime(TodoListActivity.getYearTask,TodoListActivity.getMonthTask,TodoListActivity.getHourTask,TodoListActivity.getMinTask);
+
+            String taskName = String.valueOf(taskDataList.get(0).getName());
 //        set up the intent that goes to the alarm activity
-            Intent intentAlarmActivity = new Intent(this.getApplicationContext(),AlarmActivity.class);
+            Intent intentDetailTask = new Intent(this.getApplicationContext(),DetailTask.class);
 //Set up pending intent
-            PendingIntent pendingIntentAlarmActivity = PendingIntent.getActivity(this, 0, intentAlarmActivity,0);
+            PendingIntent pendingIntentAlarmActivity = PendingIntent.getActivity(this, 0, intentDetailTask,0);
+
 //         Make the notification parameters
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.alarmicon)
                             .setContentTitle(title)
-                            .setContentText("Hello World!");
-// Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new Intent(this, AlarmActivity.class);
+                            .setContentText("Vous avez programmé la tache: " + taskName)
+            // Add media control buttons that invoke intents in your media service
+                            .addAction(R.drawable.binarytree, "goTo", pendingIntentAlarmActivity)
+                            .addAction(R.drawable.binarytree, "EndAlarm", pendingIntentAlarmActivity);// #0
 
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
@@ -85,9 +97,9 @@ public class RingtonePlayingService extends Service {
 // your application to the Home screen.
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 // Adds the back stack for the Intent (but not the Intent itself)
-            stackBuilder.addParentStack(AlarmActivity.class);
+            stackBuilder.addParentStack(MainActivity.class);
 // Adds the Intent that starts the Activity to the top of the stack
-            stackBuilder.addNextIntent(intentAlarmActivity);
+            stackBuilder.addNextIntent(intentDetailTask);
             PendingIntent resultPendingIntent =
                     stackBuilder.getPendingIntent(
                             0,

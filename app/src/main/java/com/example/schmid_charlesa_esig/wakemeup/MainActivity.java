@@ -33,7 +33,6 @@ public class MainActivity extends Activity {
         Intent i = new Intent(this,TodoListActivity.class);
         startActivity(i);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //DBAdapter.init(this);
@@ -50,7 +49,6 @@ public class MainActivity extends Activity {
                 if(status != TextToSpeech.ERROR) {
                     textToSpeech.setLanguage(Locale.FRENCH);
                     System.out.println("Trouve french pour connection");
-                    //textToSpeech.speak(GlobalVar.getVarNameUser(), TextToSpeech.QUEUE_FLUSH,null);
                 }else{
                     System.out.println("Pas de connection");
                 }

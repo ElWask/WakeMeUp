@@ -1,17 +1,23 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,16 +31,19 @@ import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class TodoListActivity extends AppCompatActivity {
     // for the calendar
     Calendar calendar = Calendar.getInstance();
-    Calendar calendarTime = Calendar.getInstance();
     String getTitleTask;
     String getDescTask;
-    String getYearTask;
-    String getMonthTask;
+    static String getYearTask;
+    static String getMonthTask;
     String getDayTask;
+    static String getHourTask;
+    static String getMinTask;
     //todolist with databse
 
     public static final String TAG = "TodoListActivity";
@@ -51,10 +60,15 @@ public class TodoListActivity extends AppCompatActivity {
         // todolist with database
         mHelper = new TodoHelper(this);
         mTodoListView = (ListView) findViewById(R.id.list_todo);
+        mTodoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("You press" + view+" and " + i);
+            }
+        });
         openTaskName();
         updateUI();
     }
-
     @Override
     public  boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.todomenu, menu);
@@ -108,8 +122,6 @@ public class TodoListActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener(){
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            i1=i1+1;
-            System.out.println("selected date is :"+ i2 + "/" + i1 + "/" + i);
             String taskYear = String.valueOf(i);
             getYearTask = taskYear;
             String taskMonth = String.valueOf(i1);
@@ -127,7 +139,9 @@ public class TodoListActivity extends AppCompatActivity {
         @Override
         public void onTimeSet(TimePicker timePicker, int i, int i1) {
             String taskHour = String.valueOf(i);
+            getHourTask = taskHour;
             String taskMin = String.valueOf(i1);
+            getMinTask = taskMin;
 
             SQLiteDatabase db = mHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -140,44 +154,64 @@ public class TodoListActivity extends AppCompatActivity {
             values.put(Todo.TodoEntry.COL_TASK_MIN, taskMin);
             db.insertWithOnConflict(Todo.TodoEntry.TABLE, null,values,SQLiteDatabase.CONFLICT_REPLACE);
             db.close();
+
             updateUI();
+            alarmIntent();
         }
     };
-    public void updateUI(){
+
+    private void alarmIntent() {
+
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+
+        cal.set(Calendar.DATE,Integer.valueOf(getDayTask));  //1-31
+        cal.set(Calendar.MONTH,Integer.valueOf(getMonthTask));  //first month is 0!!! January is zero!!!
+        cal.set(Calendar.YEAR,Integer.valueOf(getYearTask));//year...
+
+        cal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getHourTask));  //HOUR
+        cal.set(Calendar.MINUTE, Integer.valueOf(getMinTask));       //MIN
+        cal.set(Calendar.SECOND, 0);       //SEC always 0 cause we don't five a f
+
+        //        Create an intent to the alarm receiver
+        final Intent monIntent = new Intent(this, AlarmReceiver.class);
+        //put extra string in monintent to say we press the set alarm
+        monIntent.putExtra("extra","alarm on");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(TodoListActivity.this, 0, monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+    }
+
+    public void updateUI() {
         ArrayList<String> todoListName = new ArrayList<>();
 
 
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor cursorName = db.query(Todo.TodoEntry.TABLE, new String[]{
-                Todo.TodoEntry.COL_TASK_TITLE},null,null,null,null,null);
+                Todo.TodoEntry.COL_TASK_TITLE}, null, null, null, null, null);
 
-        while (cursorName.moveToNext()){
+        while (cursorName.moveToNext()) {
             int index = cursorName.getColumnIndex(Todo.TodoEntry.COL_TASK_TITLE);
             todoListName.add(cursorName.getString(index));
         }
-        if (mAdapterName == null){
+        if (mAdapterName == null) {
             List<TaskData> tasks = genererTasks();
             TaskAdapter taskAdapter = new TaskAdapter(TodoListActivity.this, tasks);
-            /*http://androidexample.com/SQLite_Database_Manipulation_Class_-_Android_Example/index.php?view=article_discription&aid=51&aaid=76*/
-           // mAdapterName = new ArrayAdapter<String>(this, R.layout.item_todo, R.id.todoTitle);
+
             mTodoListView.setAdapter(taskAdapter);
             taskAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             mAdapterName.clear();
             mAdapterName.addAll(todoListName);
             mAdapterName.notifyDataSetChanged();
         }
         cursorName.close();
         db.close();
-
-
-
     }
 
     public List<TaskData> genererTasks() {
-       // A CONTINUER SUR http://stackoverflow.com/questions/10111166/get-all-rows-from-sqlite
 
-        List<TaskData> taskDataList = new ArrayList<TaskData>();
+        List<TaskData> taskDataList;
 
         TodoHelper.init(TodoListActivity.this);
         taskDataList = TodoHelper.getAllUserData();
@@ -194,6 +228,4 @@ public class TodoListActivity extends AppCompatActivity {
         db.close();
         updateUI();
     }
-
-
 }

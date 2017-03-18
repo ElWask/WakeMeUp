@@ -84,6 +84,37 @@ public class TodoHelper extends SQLiteOpenHelper{
         // return user list
         return taskList;
     }
+    // Getting All User data
+    public static List<TaskData> getAllUserDataWhenTime(String year, String month, String hour, String minute) {
+
+        List<TaskData> taskList = new ArrayList<TaskData>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM todos WHERE year=? AND month=? AND hour=? AND minu=?";
+        // Open database for Read / Write
+        final SQLiteDatabase db = open();
+        Cursor cursor = db.rawQuery ( selectQuery, new String[] { year, month, hour, minute } );
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                TaskData data = new TaskData();
+                data.setID(Integer.parseInt(cursor.getString(0)));
+                data.setName(cursor.getString(1));
+                data.setDesc(cursor.getString(2));
+                data.setYear(cursor.getInt(3));
+                data.setMonth(cursor.getInt(4));
+                data.setDay(cursor.getInt(5));
+                data.setHour(cursor.getInt(6));
+                data.setMinute(cursor.getInt(7));
+
+                // Adding contact to list
+                taskList.add(data);
+            } while (cursor.moveToNext());
+        }
+
+        // return user list
+        return taskList;
+    }
     /*********** Initialize database *************/
     public static void init(Context context) {
         if (todoHelper == null) {
