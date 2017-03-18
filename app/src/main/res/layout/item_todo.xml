@@ -23,25 +23,16 @@
         android:id="@+id/todoDate"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="Hi"
-        android:textSize="20sp"/>
+        android:text="DateOfDay"
+        android:textSize="20sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/todoMinute"
-        android:layout_below="@id/todoDate"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="Min"
-        android:textSize="20sp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/todoHour"
         android:layout_below="@id/todoDate"
-        android:layout_toStartOf="@id/todoMinute"
-        android:layout_toLeftOf="@id/todoMinute"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:text="Heure"
         android:textSize="20sp"/>
     <Button
@@ -52,20 +43,5 @@
         android:onClick="deleteTask"
         android:layout_centerHorizontal="true"
         android:text="Done"/>
-
-    <NumberPicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/todoDesc"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/numberPicker24" />
-    <NumberPicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/todoDesc"
-
-        android:id="@+id/numberPicker60" />
-
 
 </RelativeLayout>

@@ -33,11 +33,6 @@ public class MainActivity extends Activity {
         Intent i = new Intent(this,TodoListActivity.class);
         startActivity(i);
     }
-    public void gotoSwipe(View view){
-
-        Intent i = new Intent(this,SwipeActivity.class);
-        startActivity(i);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

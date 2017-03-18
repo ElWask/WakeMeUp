@@ -34,7 +34,6 @@ public class TaskAdapter extends ArrayAdapter<TaskData> {
             viewHolder.desc = (TextView) convertView.findViewById(R.id.todoDesc);
             viewHolder.date = (TextView) convertView.findViewById(R.id.todoDate);
             viewHolder.hour = (TextView) convertView.findViewById(R.id.todoHour);
-            viewHolder.minute = (TextView) convertView.findViewById(R.id.todoMinute);
             convertView.setTag(viewHolder);
         }
         //getItem(position) va récupérer l'item [position] de la List<Task> tasks
@@ -43,12 +42,17 @@ public class TaskAdapter extends ArrayAdapter<TaskData> {
         );
         TaskData task = getItem(position);
 
-        //il ne reste plus qu'à remplir notre vue
+        //puis remplir notre vue
         viewHolder.title.setText(task.getName());
         viewHolder.desc.setText(task.getDesc());
-        viewHolder.date.setText(String.valueOf(task.getDate()));
-        viewHolder.hour.setText(String.valueOf(task.getHour()));
-        viewHolder.minute.setText(String.valueOf(task.getMinute()));
+        viewHolder.date.setText(String.valueOf(task.getDay()) + "/" + String.valueOf(task.getMonth()) + "/" + String.valueOf(task.getYear()));
+
+        if (task.getMinute() < 10) {
+            viewHolder.hour.setText(String.valueOf(task.getHour()) + ":0" + String.valueOf(task.getMinute()));
+        }else {
+            viewHolder.hour.setText(String.valueOf(task.getHour()) + ":" + String.valueOf(task.getMinute()));
+        }
+
 
         return convertView;
     }
@@ -58,6 +62,5 @@ public class TaskAdapter extends ArrayAdapter<TaskData> {
         public TextView desc;
         public TextView date;
         public TextView hour;
-        public TextView minute;
     }
 }

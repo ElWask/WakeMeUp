@@ -1,5 +1,7 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -11,18 +13,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 //todolist with databse
 import com.example.schmid_charlesa_esig.wakemeup.bdd.Todo;
 import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class TodoListActivity extends AppCompatActivity {
-
+    // for the calendar
+    Calendar calendar = Calendar.getInstance();
+    Calendar calendarTime = Calendar.getInstance();
+    String getTitleTask;
+    String getDescTask;
+    String getYearTask;
+    String getMonthTask;
+    String getDayTask;
     //todolist with databse
 
     public static final String TAG = "TodoListActivity";
@@ -39,48 +51,7 @@ public class TodoListActivity extends AppCompatActivity {
         // todolist with database
         mHelper = new TodoHelper(this);
         mTodoListView = (ListView) findViewById(R.id.list_todo);
-
-        // Open alertDialog when open
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        final EditText titleBox = new EditText(this);
-        titleBox.setHint("Title");
-        layout.addView(titleBox);
-
-        final EditText descriptionBox = new EditText(this);
-        descriptionBox.setHint("Description");
-        layout.addView(descriptionBox);
-
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("New Task")
-                .setMessage("Add a new task : ")
-                .setView(layout)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String taskTitle = String.valueOf(titleBox.getText());
-                        String taskDesc = String.valueOf(descriptionBox.getText());
-                        SQLiteDatabase db = mHelper.getWritableDatabase();
-                        ContentValues values = new ContentValues();
-                        values.put(Todo.TodoEntry.COL_TASK_TITLE, taskTitle);
-                        values.put(Todo.TodoEntry.COL_TASK_DESC, taskDesc);
-                        values.put(Todo.TodoEntry.COL_TASK_DATE, 0);
-                        values.put(Todo.TodoEntry.COL_TASK_HOUR, 0);
-                        values.put(Todo.TodoEntry.COL_TASK_MIN, 0);
-
-                        db.insertWithOnConflict(Todo.TodoEntry.TABLE, null,values,SQLiteDatabase.CONFLICT_REPLACE);
-                        db.close();
-                        updateUI();
-                    }
-                })
-                .setNegativeButton("cancel",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        updateUI();
-                    }
-                })
-                .create();
-        dialog.show();
+        openTaskName();
         updateUI();
     }
 
@@ -93,45 +64,85 @@ public class TodoListActivity extends AppCompatActivity {
     public  boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.action_add_task:
-                LinearLayout layout = new LinearLayout(this);
-                layout.setOrientation(LinearLayout.VERTICAL);
-
-                final EditText titleBox = new EditText(this);
-                titleBox.setHint("Title");
-                layout.addView(titleBox);
-
-                final EditText descriptionBox = new EditText(this);
-                descriptionBox.setHint("Description");
-                layout.addView(descriptionBox);
-                AlertDialog dialog = new AlertDialog.Builder(this)
-                        .setTitle("New Task")
-                        .setMessage("Add a new task : ")
-                        .setView(layout)
-                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String taskTitle = String.valueOf(titleBox.getText());
-                                String taskDesc = String.valueOf(descriptionBox.getText());
-                                SQLiteDatabase db = mHelper.getWritableDatabase();
-                                ContentValues values = new ContentValues();
-                                values.put(Todo.TodoEntry.COL_TASK_TITLE, taskTitle);
-                                values.put(Todo.TodoEntry.COL_TASK_DESC, taskDesc);
-                                values.put(Todo.TodoEntry.COL_TASK_DATE, 0);
-                                values.put(Todo.TodoEntry.COL_TASK_HOUR, 0);
-                                values.put(Todo.TodoEntry.COL_TASK_MIN, 0);
-                                db.insertWithOnConflict(Todo.TodoEntry.TABLE, null,values,SQLiteDatabase.CONFLICT_REPLACE);
-                                db.close();
-                                updateUI();
-                            }
-                        })
-                        .setNegativeButton("Cancel",null)
-                        .create();
-                dialog.show();
+                openTaskName();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void openTaskName() {
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText titleBox = new EditText(this);
+        titleBox.setHint("Title");
+        layout.addView(titleBox);
+
+        final EditText descriptionBox = new EditText(this);
+        descriptionBox.setHint("Description");
+        layout.addView(descriptionBox);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("New Task")
+                .setMessage("Add a new task : ")
+                .setView(layout)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String taskTitle = String.valueOf(titleBox.getText());
+                        getTitleTask = taskTitle;
+                        String taskDesc = String.valueOf(descriptionBox.getText());
+                        getDescTask = taskDesc;
+                        openTaskDate();
+                    }
+                })
+                .setNegativeButton("Cancel",null)
+                .create();
+        dialog.show();
+    }
+
+    private void openTaskDate() {
+        new DatePickerDialog(this,listener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+    DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener(){
+        @Override
+        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+            i1=i1+1;
+            System.out.println("selected date is :"+ i2 + "/" + i1 + "/" + i);
+            String taskYear = String.valueOf(i);
+            getYearTask = taskYear;
+            String taskMonth = String.valueOf(i1);
+            getMonthTask = taskMonth;
+            String taskDay = String.valueOf(i2);
+            getDayTask = taskDay;
+            openTaskTime();
+        }
+    };
+
+    private void openTaskTime() {
+        new TimePickerDialog(this,listenerTime,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true).show();
+    }
+    TimePickerDialog.OnTimeSetListener listenerTime = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker timePicker, int i, int i1) {
+            String taskHour = String.valueOf(i);
+            String taskMin = String.valueOf(i1);
+
+            SQLiteDatabase db = mHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(Todo.TodoEntry.COL_TASK_TITLE, getTitleTask);
+            values.put(Todo.TodoEntry.COL_TASK_DESC, getDescTask);
+            values.put(Todo.TodoEntry.COL_TASK_YEAR, getYearTask);
+            values.put(Todo.TodoEntry.COL_TASK_MONTH, getMonthTask);
+            values.put(Todo.TodoEntry.COL_TASK_DAY, getDayTask);
+            values.put(Todo.TodoEntry.COL_TASK_HOUR, taskHour);
+            values.put(Todo.TodoEntry.COL_TASK_MIN, taskMin);
+            db.insertWithOnConflict(Todo.TodoEntry.TABLE, null,values,SQLiteDatabase.CONFLICT_REPLACE);
+            db.close();
+            updateUI();
+        }
+    };
     public void updateUI(){
         ArrayList<String> todoListName = new ArrayList<>();
 

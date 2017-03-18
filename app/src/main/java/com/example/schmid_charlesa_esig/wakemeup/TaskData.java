@@ -9,7 +9,9 @@ public class TaskData {
     int id;
     String title;
     String desc;
-    int date;
+    int year;
+    int month;
+    int day;
     int hour;
     int minute;
     // empty constructor
@@ -17,11 +19,13 @@ public class TaskData {
     }
 
     // constructor
-    public TaskData(int id, String name, String desc, int date, int hour, int minute){
+    public TaskData(int id, String name, String desc, int year, int month, int day, int hour, int minute){
         this.id = id;
         this.title = name;
         this.desc = desc;
-        this.date = date;
+        this.year = year;
+        this.month = month;
+        this.day = day;
         this.hour = hour;
         this.minute = minute;
 
@@ -57,12 +61,26 @@ public class TaskData {
         this.desc = desc;
     }
 
-    public int getDate() {
-        return this.date;
+    public int getYear() {
+        return this.year;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public void setYear(int year) {
+        this.year = year;
+    }
+    public int getMonth() {
+        return this.month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+    public int getDay() {
+        return this.day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 
     public int getHour() {
@@ -82,7 +100,7 @@ public class TaskData {
     }
     @Override
     public String toString() {
-        return "TaskInfo [name=" + title + ", desc=" + desc + ", Date= "+ date + ", hours= " +hour + ", minute=" + minute+"]";
+        return "TaskInfo [name=" + title + ", desc=" + desc + ", Date= "+ day + "/" + month + "/" + year + ", hours= " +hour + ", minute=" + minute+"]";
     }
 
 }
