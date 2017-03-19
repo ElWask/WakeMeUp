@@ -8,17 +8,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,7 +25,6 @@ import android.widget.TimePicker;
 //todolist with databse
 import com.example.schmid_charlesa_esig.wakemeup.bdd.Todo;
 import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -37,20 +33,20 @@ import java.util.TimeZone;
 public class TodoListActivity extends AppCompatActivity {
     // for the calendar
     Calendar calendar = Calendar.getInstance();
-    String getTitleTask;
-    String getDescTask;
+    static String getTitleTask;
+    static String getDescTask;
     static String getYearTask;
     static String getMonthTask;
-    String getDayTask;
+    static String getDayTask;
     static String getHourTask;
     static String getMinTask;
     //todolist with databse
 
-    public static final String TAG = "TodoListActivity";
     private TodoHelper mHelper;
     private ListView mTodoListView;
 
-    private ArrayAdapter<String> mAdapterName;
+    //to have different alarm
+    static int requestCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +56,6 @@ public class TodoListActivity extends AppCompatActivity {
         // todolist with database
         mHelper = new TodoHelper(this);
         mTodoListView = (ListView) findViewById(R.id.list_todo);
-        mTodoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("You press" + view+" and " + i);
-            }
-        });
         openTaskName();
         updateUI();
     }
@@ -103,10 +93,8 @@ public class TodoListActivity extends AppCompatActivity {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String taskTitle = String.valueOf(titleBox.getText());
-                        getTitleTask = taskTitle;
-                        String taskDesc = String.valueOf(descriptionBox.getText());
-                        getDescTask = taskDesc;
+                        getTitleTask = String.valueOf(titleBox.getText());
+                        getDescTask = String.valueOf(descriptionBox.getText());
                         openTaskDate();
                     }
                 })
@@ -122,12 +110,9 @@ public class TodoListActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener(){
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            String taskYear = String.valueOf(i);
-            getYearTask = taskYear;
-            String taskMonth = String.valueOf(i1);
-            getMonthTask = taskMonth;
-            String taskDay = String.valueOf(i2);
-            getDayTask = taskDay;
+            getYearTask = String.valueOf(i);
+            getMonthTask = String.valueOf(i1);
+            getDayTask = String.valueOf(i2);
             openTaskTime();
         }
     };
@@ -176,43 +161,35 @@ public class TodoListActivity extends AppCompatActivity {
         final Intent monIntent = new Intent(this, AlarmReceiver.class);
         //put extra string in monintent to say we press the set alarm
         monIntent.putExtra("extra","alarm on");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(TodoListActivity.this, 0, monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        requestCode = (int)cal.getTimeInMillis();
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(TodoListActivity.this, requestCode, monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
 
     public void updateUI() {
-        ArrayList<String> todoListName = new ArrayList<>();
+        List<TaskData> tasks = genererTasks();
+        TaskAdapter taskAdapter = new TaskAdapter(TodoListActivity.this, tasks);
+        mTodoListView.setAdapter(taskAdapter);
+        taskAdapter.notifyDataSetChanged();
+        mTodoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TaskData nameTask = (TaskData) mTodoListView.getItemAtPosition(i);
+                String nameTrans = nameTask.getName();
 
-
-        SQLiteDatabase db = mHelper.getReadableDatabase();
-        Cursor cursorName = db.query(Todo.TodoEntry.TABLE, new String[]{
-                Todo.TodoEntry.COL_TASK_TITLE}, null, null, null, null, null);
-
-        while (cursorName.moveToNext()) {
-            int index = cursorName.getColumnIndex(Todo.TodoEntry.COL_TASK_TITLE);
-            todoListName.add(cursorName.getString(index));
-        }
-        if (mAdapterName == null) {
-            List<TaskData> tasks = genererTasks();
-            TaskAdapter taskAdapter = new TaskAdapter(TodoListActivity.this, tasks);
-
-            mTodoListView.setAdapter(taskAdapter);
-            taskAdapter.notifyDataSetChanged();
-        } else {
-            mAdapterName.clear();
-            mAdapterName.addAll(todoListName);
-            mAdapterName.notifyDataSetChanged();
-        }
-        cursorName.close();
-        db.close();
+                Intent intent = new Intent(TodoListActivity.this,SetDetailTaskActivity.class);
+                intent.putExtra("TaskName",nameTrans);
+                startActivity(intent);
+                return false;
+            }
+        });
     }
 
     public List<TaskData> genererTasks() {
 
         List<TaskData> taskDataList;
-
         TodoHelper.init(TodoListActivity.this);
         taskDataList = TodoHelper.getAllUserData();
 

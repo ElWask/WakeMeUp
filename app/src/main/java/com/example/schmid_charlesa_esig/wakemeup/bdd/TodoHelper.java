@@ -54,10 +54,9 @@ public class TodoHelper extends SQLiteOpenHelper{
     // Getting All User data
     public static List<TaskData> getAllUserData() {
 
-        List<TaskData> taskList = new ArrayList<TaskData>();
+        List<TaskData> taskList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM todos";
-
 
         // Open database for Read / Write
         final SQLiteDatabase db = open();
@@ -80,14 +79,13 @@ public class TodoHelper extends SQLiteOpenHelper{
                 taskList.add(data);
             } while (cursor.moveToNext());
         }
-
         // return user list
         return taskList;
     }
-    // Getting All User data
+    // Getting All User data with year month hour and minute
     public static List<TaskData> getAllUserDataWhenTime(String year, String month, String hour, String minute) {
 
-        List<TaskData> taskList = new ArrayList<TaskData>();
+        List<TaskData> taskList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM todos WHERE year=? AND month=? AND hour=? AND minu=?";
         // Open database for Read / Write
@@ -115,6 +113,76 @@ public class TodoHelper extends SQLiteOpenHelper{
         // return user list
         return taskList;
     }
+
+    // Getting All User data with name
+    public static List<TaskData> getAllUserDataWhenName(String name) {
+
+        List<TaskData> taskList = new ArrayList<TaskData>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM todos WHERE title=?";
+        // Open database for Read / Write
+        final SQLiteDatabase db = open();
+        Cursor cursor = db.rawQuery ( selectQuery, new String[] { name } );
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                TaskData data = new TaskData();
+                data.setID(Integer.parseInt(cursor.getString(0)));
+                data.setName(cursor.getString(1));
+                data.setDesc(cursor.getString(2));
+                data.setYear(cursor.getInt(3));
+                data.setMonth(cursor.getInt(4));
+                data.setDay(cursor.getInt(5));
+                data.setHour(cursor.getInt(6));
+                data.setMinute(cursor.getInt(7));
+
+                // Adding contact to list
+                taskList.add(data);
+            } while (cursor.moveToNext());
+        }
+
+        // return user list
+        return taskList;
+    }
+    // Getting All User data with name
+    public static List<TaskData> setAllUserDataWithName(String oldName, String name,String desc, String year, String month, String day, String hour, String minute) {
+
+        List<TaskData> taskList = new ArrayList<>();
+        // Select All Query
+        String updateQuery = "UPDATE todos SET title=?, desc=?, year=?, month=?, day=?, hour=?, minu=? WHERE title=?";
+        // Open database for Read / Write
+        final SQLiteDatabase db = open();
+        Cursor cursor = db.rawQuery ( updateQuery, new String[] { name,desc, year, month, day, hour,minute, oldName } );
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                TaskData data = new TaskData();
+                data.setID(Integer.parseInt(cursor.getString(0)));
+                data.setName(cursor.getString(1));
+                data.setDesc(cursor.getString(2));
+                data.setYear(cursor.getInt(3));
+                data.setMonth(cursor.getInt(4));
+                data.setDay(cursor.getInt(5));
+                data.setHour(cursor.getInt(6));
+                data.setMinute(cursor.getInt(7));
+                System.out.println("YOO"+cursor.getString(1));
+                System.out.println("YOO"+cursor.getString(2));
+                System.out.println("YOO"+cursor.getString(3));
+                System.out.println("YOO"+cursor.getString(4));
+                System.out.println("YOO"+cursor.getString(5));
+                // Adding contact to list
+                taskList.add(data);
+            } while (cursor.moveToNext());
+        }
+
+        // return user list
+        return taskList;
+    }
+
+
+
     /*********** Initialize database *************/
     public static void init(Context context) {
         if (todoHelper == null) {

@@ -101,7 +101,7 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //        Create a pending intent that delays the intent until the time asked
-                pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0, monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0 , monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 updateText("Alarm disabled");
                 alarmManager.cancel(pendingIntent);

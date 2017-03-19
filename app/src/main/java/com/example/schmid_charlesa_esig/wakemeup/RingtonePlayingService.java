@@ -76,6 +76,10 @@ public class RingtonePlayingService extends Service {
             taskDataList = TodoHelper.getAllUserDataWhenTime(TodoListActivity.getYearTask,TodoListActivity.getMonthTask,TodoListActivity.getHourTask,TodoListActivity.getMinTask);
 
             String taskName = String.valueOf(taskDataList.get(0).getName());
+            System.out.println("WTFF1FFFFFFFFFF"+taskDataList.get(1).getName());
+            System.out.println("WTFFF2FFFFFFFFF"+taskDataList.get(2).getName());
+            System.out.println("WTFFFF3FFFFFFFF"+taskDataList.get(3).getName());
+            System.out.println("WTFFFFF4FFFFFFF"+taskDataList.get(4).getName());
 //        set up the intent that goes to the alarm activity
             Intent intentDetailTask = new Intent(this.getApplicationContext(),DetailTask.class);
 //Set up pending intent

@@ -33,6 +33,11 @@ public class MainActivity extends Activity {
         Intent i = new Intent(this,TodoListActivity.class);
         startActivity(i);
     }
+//    public void gotoMyList(View view){
+//
+//        Intent i = new Intent(this,QLQPART.class);
+//        startActivity(i);
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //DBAdapter.init(this);

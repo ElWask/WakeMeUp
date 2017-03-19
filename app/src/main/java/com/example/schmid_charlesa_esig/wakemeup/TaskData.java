@@ -6,14 +6,14 @@ package com.example.schmid_charlesa_esig.wakemeup;
 
 public class TaskData {
     //private variables
-    int id;
-    String title;
-    String desc;
-    int year;
-    int month;
-    int day;
-    int hour;
-    int minute;
+    private int id;
+    private String title;
+    private String desc;
+    private int year;
+    private int month;
+    private int day;
+    private int hour;
+    private int minute;
     // empty constructor
     public TaskData(){
     }
@@ -75,6 +75,7 @@ public class TaskData {
     public void setMonth(int month) {
         this.month = month;
     }
+
     public int getDay() {
         return this.day;
     }
