@@ -31,6 +31,8 @@
             android:label="Task of the day" />
         <activity android:name=".DetailTask" />
         <activity android:name=".SetDetailTaskActivity" />
+        <activity android:name=".DayTask" />
+        <activity android:name=".TalkToMe"></activity>
     </application>
 
 </manifest>

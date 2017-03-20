@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class RingtonePlayingService extends Service {
     boolean isRunning;
     int startID;
     int mId;
+   // static final String url = "http://87.230.101.78:80/top100station.mp3";
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -64,7 +66,25 @@ public class RingtonePlayingService extends Service {
 //        if there is no music playing and we press set Alarm
         if (!this.isRunning && startId ==1 ){
             Log.e("There is no musc ","and you want to start");
-
+//            String url = "http://87.230.101.78:80/top100station.mp3";
+//            try {
+//                mediaSong.setDataSource(url);
+//            } catch (IllegalArgumentException e) {
+//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+//            } catch (SecurityException e) {
+//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+//            } catch (IllegalStateException e) {
+//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                mediaSong.prepare();
+//            } catch (IllegalStateException e) {
+//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+//            } catch (IOException e) {
+//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+//            }
             mediaSong = MediaPlayer.create(this, R.raw.nyancat);
             mediaSong.start();
 
@@ -73,15 +93,14 @@ public class RingtonePlayingService extends Service {
 
 //        notification
             List<TaskData> taskDataList;
-            taskDataList = TodoHelper.getAllUserDataWhenTime(TodoListActivity.getYearTask,TodoListActivity.getMonthTask,TodoListActivity.getHourTask,TodoListActivity.getMinTask);
+            taskDataList = TodoHelper.getAllUserDataWhenName(title);
+            System.out.println("WATAGAPITUSBERRélkjnhfdlkjngfdshgfdY"+title);
 
             String taskName = String.valueOf(taskDataList.get(0).getName());
-            System.out.println("WTFF1FFFFFFFFFF"+taskDataList.get(1).getName());
-            System.out.println("WTFFF2FFFFFFFFF"+taskDataList.get(2).getName());
-            System.out.println("WTFFFF3FFFFFFFF"+taskDataList.get(3).getName());
-            System.out.println("WTFFFFF4FFFFFFF"+taskDataList.get(4).getName());
+
 //        set up the intent that goes to the alarm activity
             Intent intentDetailTask = new Intent(this.getApplicationContext(),DetailTask.class);
+            intentDetailTask.putExtra("TaskReReName",title);
 //Set up pending intent
             PendingIntent pendingIntentAlarmActivity = PendingIntent.getActivity(this, 0, intentDetailTask,0);
 
@@ -110,6 +129,7 @@ public class RingtonePlayingService extends Service {
                             PendingIntent.FLAG_UPDATE_CURRENT
                     );
             mBuilder.setContentIntent(resultPendingIntent);
+            mBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 // mId allows you to update the notification later on.

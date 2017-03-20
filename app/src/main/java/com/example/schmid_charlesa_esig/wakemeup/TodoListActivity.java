@@ -56,7 +56,13 @@ public class TodoListActivity extends AppCompatActivity {
         // todolist with database
         mHelper = new TodoHelper(this);
         mTodoListView = (ListView) findViewById(R.id.list_todo);
-        openTaskName();
+
+        Bundle bundle = getIntent().getExtras();
+        final String doIAddTheTask =  bundle.getString("addTask");
+        if (doIAddTheTask.equalsIgnoreCase("yes")){
+            openTaskName();
+        }
+
         updateUI();
     }
     @Override
@@ -161,6 +167,7 @@ public class TodoListActivity extends AppCompatActivity {
         final Intent monIntent = new Intent(this, AlarmReceiver.class);
         //put extra string in monintent to say we press the set alarm
         monIntent.putExtra("extra","alarm on");
+        monIntent.putExtra("taskNameTrans",TodoListActivity.getTitleTask);
         requestCode = (int)cal.getTimeInMillis();
         PendingIntent pendingIntent = PendingIntent.getBroadcast(TodoListActivity.this, requestCode, monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

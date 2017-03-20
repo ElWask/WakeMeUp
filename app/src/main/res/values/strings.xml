@@ -8,6 +8,8 @@
     <string name="buttonSetAlarm">Set Alarm</string>
     <string name="buttonEndAlarm">EndAlarm</string>
     <string name="legendetext">Set the alarm first</string>
+    <string name="AddTask">Ajouter une tâche</string>
+    <string name="SeeTaskOfTheDay">Voir mes tâches du jour</string>
 
     <string-array name="todo_titles">
         <item>English</item>

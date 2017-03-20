@@ -31,23 +31,30 @@ public class DetailTask extends AppCompatActivity {
         hour = (TextView)findViewById(R.id.hourTask);
         stopAlarm = (Button)findViewById(R.id.btnDetailTask);
 
+        Bundle bundle = getIntent().getExtras();
+        String title = bundle.getString("TaskReReName");
+
         List<TaskData> taskDataList;
-        taskDataList = TodoHelper.getAllUserDataWhenTime(TodoListActivity.getYearTask,
-                TodoListActivity.getMonthTask,
-                TodoListActivity.getHourTask,
-                TodoListActivity.getMinTask
-        );
+
+        taskDataList = TodoHelper.getAllUserDataWhenName(title);
 
         int rightMonth =  taskDataList.get(0).getMonth() + 1;
         String dateComplete = taskDataList.get(0).getDay() + "/" + rightMonth + "/" + taskDataList.get(0).getYear();
-        String hourComplete = String.valueOf(taskDataList.get(0).getHour())+":"+taskDataList.get(0).getMinute();
+        String hourComplete;
+        if (taskDataList.get(0).getMinute() < 10){
+            hourComplete = String.valueOf(taskDataList.get(0).getHour())+":0"+taskDataList.get(0).getMinute();
+        }else{
+            hourComplete  = String.valueOf(taskDataList.get(0).getHour())+":"+taskDataList.get(0).getMinute();
+        }
+
+
 
         name.setText(taskDataList.get(0).getName());
         desc.setText(taskDataList.get(0).getDesc());
         date.setText(dateComplete);
         hour.setText(hourComplete);
 
-        //        Create an intent to the alarm receiver
+        //        Create a n intent to the alarm receiver
         final Intent monIntent = new Intent(this, AlarmReceiver.class);
         //        Initalise alarm mana
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
