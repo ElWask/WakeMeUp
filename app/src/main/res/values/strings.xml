@@ -7,22 +7,9 @@
     <string name="titleMenuParam">Parameters</string>
     <string name="buttonSetAlarm">Set Alarm</string>
     <string name="buttonEndAlarm">EndAlarm</string>
-    <string name="legendetext">Set the alarm first</string>
-    <string name="AddTask">Ajouter une tâche</string>
-    <string name="SeeTaskOfTheDay">Voir mes tâches du jour</string>
-
-    <string-array name="todo_titles">
-        <item>English</item>
-        <item>Class</item>
-        <item>Work</item>
-        <item>Familly</item>
-    </string-array>
-
-    <string-array name="todo_desc">
-        <item>Make a rap song</item>
-        <item>Keep going on the project</item>
-        <item>Send my CV</item>
-        <item>Send postcard</item>
-    </string-array>
-
+    <string name="legendetext">Veuillez sélectionner une heure</string>
+    <string name="AddTask">Ajouter</string>
+    <string name="SeeTaskOfTheDay">Aujourd\'hui</string>
+    <string name="addText">Ajouter</string>
+    <string name="t_ches">Tâches</string>
 </resources>

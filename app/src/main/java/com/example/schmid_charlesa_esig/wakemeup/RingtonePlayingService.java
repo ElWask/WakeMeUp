@@ -92,15 +92,19 @@ public class RingtonePlayingService extends Service {
             this.startID = 0;
 
 //        notification
-            List<TaskData> taskDataList;
-            taskDataList = TodoHelper.getAllUserDataWhenName(title);
-            System.out.println("WATAGAPITUSBERRélkjnhfdlkjngfdshgfdY"+title);
-
-            String taskName = String.valueOf(taskDataList.get(0).getName());
-
-//        set up the intent that goes to the alarm activity
-            Intent intentDetailTask = new Intent(this.getApplicationContext(),DetailTask.class);
-            intentDetailTask.putExtra("TaskReReName",title);
+            String taskName;
+            Intent intentDetailTask;
+            if (title != null){
+                List<TaskData> taskDataList;
+                taskDataList = TodoHelper.getAllUserDataWhenName(title);
+                taskName = String.valueOf(taskDataList.get(0).getName());
+                //        set up the intent that goes to the alarm activity
+                intentDetailTask = new Intent(this.getApplicationContext(),DetailTask.class);
+                intentDetailTask.putExtra("TaskReReName",title);
+            }else{
+                taskName = "Se réveiller";
+                intentDetailTask = new Intent(this.getApplicationContext(),DayTask.class);
+            }
 //Set up pending intent
             PendingIntent pendingIntentAlarmActivity = PendingIntent.getActivity(this, 0, intentDetailTask,0);
 
@@ -108,7 +112,7 @@ public class RingtonePlayingService extends Service {
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.alarmicon)
-                            .setContentTitle(title)
+                            .setContentTitle(taskName)
                             .setContentText("Vous avez programmé la tache: " + taskName)
             // Add media control buttons that invoke intents in your media service
                             .addAction(R.drawable.binarytree, "goTo", pendingIntentAlarmActivity)

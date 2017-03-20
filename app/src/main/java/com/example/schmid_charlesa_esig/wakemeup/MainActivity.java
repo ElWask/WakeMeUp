@@ -42,6 +42,11 @@ public class MainActivity extends Activity {
         Intent i = new Intent(this,DayTask.class);
         startActivity(i);
     }
+    public void gotoAlarm(View view){
+
+        Intent i = new Intent(this,AlarmActivity.class);
+        startActivity(i);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //DBAdapter.init(this);
