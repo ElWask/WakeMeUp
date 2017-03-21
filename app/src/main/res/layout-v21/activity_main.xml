@@ -32,8 +32,7 @@
         android:layout_marginStart="6dp"
         android:textColor="@color/colorTextTask"
         android:drawableTop="@drawable/alarmclock"
-        android:paddingTop="30dp"
-        android:background="@drawable/rounded_button1"/>
+        android:paddingTop="30dp"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,8 +47,7 @@
         android:layout_marginEnd="6dp"
         android:textColor="@color/colorTextTask"
         android:drawableTop="@drawable/tasks"
-        android:paddingTop="30dp"
-        android:background="@drawable/rounded_button2"/>
+        android:paddingTop="30dp"/>
 
     <Button
         android:text="@string/AddTask"
@@ -65,8 +63,7 @@
         android:layout_marginEnd="6dp"
         android:textColor="@color/colorTextTask"
         android:drawableTop="@drawable/tasks"
-        android:paddingTop="30dp"
-        android:background="@drawable/rounded_button3"/>
+        android:paddingTop="30dp"/>
 
     <Button
         android:text="@string/SeeTaskOfTheDay"
@@ -82,7 +79,6 @@
         android:layout_marginStart="6dp"
         android:textColor="@color/colorTextTask"
         android:drawableTop="@drawable/tasks"
-        android:paddingTop="30dp"
-        android:background="@drawable/rounded_button4"/>
+        android:paddingTop="30dp"/>
 
 </RelativeLayout>
