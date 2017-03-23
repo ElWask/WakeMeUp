@@ -1,5 +1,6 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -8,7 +9,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.provider.Contacts;
+import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -35,6 +41,7 @@ public class TodoListActivity extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     static String getTitleTask;
     static String getDescTask;
+    static String getContactTask;
     static String getYearTask;
     static String getMonthTask;
     static String getDayTask;
@@ -46,8 +53,10 @@ public class TodoListActivity extends AppCompatActivity {
     private ListView mTodoListView;
 
     //to have different alarm
-    static int requestCode;
-
+    static int REQUEST_CODE;
+    final int PICK_CONTACT=1;
+    //to add a contact
+    Intent intentContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +89,44 @@ public class TodoListActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    protected void getContactInfo(Intent intent)
+    {
+
+        Cursor cursor =  managedQuery(intent.getData(), null, null, null, null);
+        while (cursor.moveToNext())
+        {
+            String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            getContactTask = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+            System.out.println(getContactTask);
+            String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+            if ( hasPhone.equalsIgnoreCase("1"))
+                hasPhone = "true";
+            else
+                hasPhone = "false" ;
+
+            if (Boolean.parseBoolean(hasPhone))
+            {
+                Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
+                while (phones.moveToNext())
+                {
+                    String phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    System.out.println(phone);
+                }
+                phones.close();
+            }
+        }  //while (cursor.moveToNext())
+        cursor.close();
+    }//getContactInfo
+    public void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+
+        if (requestCode == PICK_CONTACT)
+        {
+            getContactInfo(intent);
+            // Your class variables now have the data, so do something with it.
+        }
+    }//onActivityResult
 
     private void openTaskName() {
         LinearLayout layout = new LinearLayout(this);
@@ -92,11 +139,24 @@ public class TodoListActivity extends AppCompatActivity {
         final EditText descriptionBox = new EditText(this);
         descriptionBox.setHint("Description");
         layout.addView(descriptionBox);
+
+        final Button buttonBox = new Button(this);
+        buttonBox.setHint("Ajouter un numéro");
+        layout.addView(buttonBox);
+        buttonBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("LOL");
+                // contact
+                startActivityForResult(intentContact, PICK_CONTACT);
+            }
+        });
+
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("New Task")
-                .setMessage("Add a new task : ")
+                .setTitle("Nouvelle tâche")
+                .setMessage("Ajout d'une nouvelle tâche : ")
                 .setView(layout)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ajouter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getTitleTask = String.valueOf(titleBox.getText());
@@ -168,8 +228,8 @@ public class TodoListActivity extends AppCompatActivity {
         //put extra string in monintent to say we press the set alarm
         monIntent.putExtra("extra","alarm on");
         monIntent.putExtra("taskNameTrans",TodoListActivity.getTitleTask);
-        requestCode = (int)cal.getTimeInMillis();
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(TodoListActivity.this, requestCode, monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        REQUEST_CODE = (int)cal.getTimeInMillis();
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(TodoListActivity.this, REQUEST_CODE, monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);

@@ -59,7 +59,7 @@ public class DetailTask extends AppCompatActivity {
         //        Initalise alarm mana
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        getRequest = TodoListActivity.requestCode;
+        getRequest = TodoListActivity.REQUEST_CODE;
         stopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
