@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/timePicker"
         android:layout_alignParentStart="true"
-        android:background="@drawable/rounded_buttonMain"
+        android:background="@drawable/rounded_buttonmain"
         android:textColor="@color/colorTextTask"
         android:id="@+id/setAlarm"/>
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/timePicker"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/rounded_buttonMain"
+        android:background="@drawable/rounded_buttonmain"
         android:textColor="@color/colorTextTask"
         android:id="@+id/endAlarm"/>
 
