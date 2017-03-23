@@ -71,7 +71,6 @@ public class TodoListActivity extends AppCompatActivity {
         if (doIAddTheTask.equalsIgnoreCase("yes")){
             openTaskName();
         }
-
         updateUI();
     }
     @Override
@@ -240,16 +239,15 @@ public class TodoListActivity extends AppCompatActivity {
         TaskAdapter taskAdapter = new TaskAdapter(TodoListActivity.this, tasks);
         mTodoListView.setAdapter(taskAdapter);
         taskAdapter.notifyDataSetChanged();
-        mTodoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mTodoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TaskData nameTask = (TaskData) mTodoListView.getItemAtPosition(i);
                 String nameTrans = nameTask.getName();
 
                 Intent intent = new Intent(TodoListActivity.this,SetDetailTaskActivity.class);
                 intent.putExtra("TaskName",nameTrans);
                 startActivity(intent);
-                return false;
             }
         });
     }
