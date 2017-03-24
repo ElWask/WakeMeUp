@@ -39,6 +39,8 @@ public class AlarmActivity extends AppCompatActivity {
             case R.id.parameters:
                 startActivity(new Intent(this,MainActivity.class));
                 return true;
+            case android.R.id.home:
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -51,6 +53,11 @@ public class AlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm);
         this.context = this;
 
+        // retour button
+        if (getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 //        Initalise alarm mana
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 //        initialise our timepicker

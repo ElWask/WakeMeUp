@@ -1,5 +1,6 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -41,8 +42,13 @@ public class DayTask extends AppCompatActivity {
         mTodoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println(mTodoListView.getItemAtPosition(i).toString());
                 System.out.println("This should show when press on one button and should be the item at position"+i);
-                Toast.makeText(DayTask.this, "Hello world", Toast.LENGTH_LONG).show();
+                TaskData nameTask = (TaskData) mTodoListView.getItemAtPosition(i);
+                String nameTrans = nameTask.getName();
+                Intent intent = new Intent(DayTask.this,DetailTask.class);
+                intent.putExtra("TaskReReName",nameTrans);
+                startActivity(intent);
             }
         });
     }

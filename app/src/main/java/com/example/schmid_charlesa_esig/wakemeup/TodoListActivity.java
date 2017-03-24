@@ -1,6 +1,5 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -12,11 +11,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +30,7 @@ import android.widget.TimePicker;
 //todolist with databse
 import com.example.schmid_charlesa_esig.wakemeup.bdd.Todo;
 import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +42,7 @@ public class TodoListActivity extends AppCompatActivity {
     static String getTitleTask;
     static String getDescTask;
     static String getContactTask;
+    static String getNumberContactTask;
     static String getYearTask;
     static String getMonthTask;
     static String getDayTask;
@@ -54,13 +55,22 @@ public class TodoListActivity extends AppCompatActivity {
 
     //to have different alarm
     static int REQUEST_CODE;
-    final int PICK_CONTACT=1;
+    // Request code for READ_CONTACTS. It can be any number > 0.
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+    private static final int RESULT_PICK_CONTACT = 1;
+    private static final int PICK_CONTACT = 100;
     //to add a contact
     Intent intentContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
+
+        //retour button
+        if (getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         // todolist with database
         mHelper = new TodoHelper(this);
@@ -84,48 +94,12 @@ public class TodoListActivity extends AppCompatActivity {
             case R.id.action_add_task:
                 openTaskName();
                 return true;
+            case android.R.id.home:
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-    protected void getContactInfo(Intent intent)
-    {
-
-        Cursor cursor =  managedQuery(intent.getData(), null, null, null, null);
-        while (cursor.moveToNext())
-        {
-            String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-            getContactTask = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-            System.out.println(getContactTask);
-            String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-
-            if ( hasPhone.equalsIgnoreCase("1"))
-                hasPhone = "true";
-            else
-                hasPhone = "false" ;
-
-            if (Boolean.parseBoolean(hasPhone))
-            {
-                Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
-                while (phones.moveToNext())
-                {
-                    String phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    System.out.println(phone);
-                }
-                phones.close();
-            }
-        }  //while (cursor.moveToNext())
-        cursor.close();
-    }//getContactInfo
-    public void onActivityResult(int requestCode, int resultCode, Intent intent)
-    {
-
-        if (requestCode == PICK_CONTACT)
-        {
-            getContactInfo(intent);
-            // Your class variables now have the data, so do something with it.
-        }
-    }//onActivityResult
 
     private void openTaskName() {
         LinearLayout layout = new LinearLayout(this);
@@ -147,7 +121,7 @@ public class TodoListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.println("LOL");
                 // contact
-                startActivityForResult(intentContact, PICK_CONTACT);
+                pickContact();
             }
         });
 
@@ -160,6 +134,9 @@ public class TodoListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getTitleTask = String.valueOf(titleBox.getText());
                         getDescTask = String.valueOf(descriptionBox.getText());
+                        if (getContactTask != null){
+                            getDescTask += "\n" + "avec " + getContactTask + " " + getNumberContactTask;
+                        }
                         openTaskDate();
                     }
                 })
@@ -209,6 +186,45 @@ public class TodoListActivity extends AppCompatActivity {
             alarmIntent();
         }
     };
+
+    public void pickContact()
+    {
+        Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+        startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case RESULT_PICK_CONTACT:
+                    contactPicked(data);
+                    break;
+            }
+
+        } else {
+            Log.e("MainActivity", "Failed to pick contact");
+        }
+    }
+
+    private void contactPicked(Intent data) {
+        Cursor cursor = null;
+        try {
+            String phoneNo = null;
+            String name = null;
+            Uri uri = data.getData();
+            cursor = getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToFirst();
+
+            int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+
+            getNumberContactTask = cursor.getString(phoneIndex);
+            getContactTask = cursor.getString(nameIndex);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void alarmIntent() {
 
