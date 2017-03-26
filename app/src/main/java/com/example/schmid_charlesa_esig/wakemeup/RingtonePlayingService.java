@@ -8,6 +8,9 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -85,6 +88,7 @@ public class RingtonePlayingService extends Service {
 //            } catch (IOException e) {
 //                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
 //            }
+
             mediaSong = MediaPlayer.create(this, R.raw.nyancat);
             mediaSong.start();
 
@@ -100,7 +104,7 @@ public class RingtonePlayingService extends Service {
                 taskName = String.valueOf(taskDataList.get(0).getName());
                 //        set up the intent that goes to the alarm activity
                 intentDetailTask = new Intent(this.getApplicationContext(),DetailTask.class);
-                intentDetailTask.putExtra("TaskReReName",title);
+                intentDetailTask.putExtra("TaskName",title);
             }else{
                 taskName = "Se réveiller";
                 intentDetailTask = new Intent(this.getApplicationContext(),DayTask.class);

@@ -18,9 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AlarmActivity" />
+        <activity
+            android:name=".AlarmActivity"
+            android:label="Réveil"/>
 
-        <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".AlarmReceiver"/>
 
         <service
             android:name=".RingtonePlayingService"
@@ -28,10 +30,16 @@
 
         <activity
             android:name=".TodoListActivity"
-            android:label="Task of the day" />
-        <activity android:name=".DetailTask" />
-        <activity android:name=".SetDetailTaskActivity" />
-        <activity android:name=".DayTask" />
+            android:label="Toutes vos tâches" />
+        <activity
+            android:name=".DetailTask"
+            android:label="Détails"/>
+        <activity
+            android:name=".SetDetailTaskActivity"
+            android:label="Détails"/>
+        <activity
+            android:name=".DayTask"
+            android:label="Vos tâches du jour"/>
         <activity android:name=".TalkToMe"/>
     </application>
 

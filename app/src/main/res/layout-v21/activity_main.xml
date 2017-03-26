@@ -7,26 +7,27 @@
     android:transitionGroup="true"
     android:background="@color/colorBackTask">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/app_name"
-        android:id="@+id/logoImg" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/tableLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/listviewMainDay" />
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stretchColumns="*"
         android:weightSum="4"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tableLayout">
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2" >
+            android:layout_weight="3" >
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -50,12 +51,6 @@
                 android:drawableTop="@drawable/tasks"
                 android:paddingTop="30dp"
                 android:layout_weight="1"/>
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" >
         <Button
             android:text="@string/AddTask"
             android:textSize="20sp"
@@ -68,18 +63,6 @@
             android:paddingTop="30dp"
             android:layout_weight="1"/>
 
-        <Button
-            android:text="@string/SeeTaskOfTheDay"
-            android:textSize="20sp"
-            android:textColor="@color/colorTextTask"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:id="@+id/gotoMyList"
-            android:onClick="gotoTaskOfTheDay"
-            android:drawableTop="@drawable/tasks"
-            android:paddingTop="30dp"
-            android:layout_weight="1"/>
         </TableRow>
     </TableLayout>
-
 </RelativeLayout>

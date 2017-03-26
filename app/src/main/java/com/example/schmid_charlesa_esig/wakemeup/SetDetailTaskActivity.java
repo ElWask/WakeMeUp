@@ -55,7 +55,7 @@ public class SetDetailTaskActivity extends AppCompatActivity {
                         descTask.getText().toString(),yearTask.getText().toString(),
                         monthTask.getText().toString(),dayTask.getText().toString(),
                         hourTask.getText().toString(),minuteTask.getText().toString());
-                Intent intent = new Intent(SetDetailTaskActivity.this,TodoListActivity.class);
+                Intent intent = new Intent(SetDetailTaskActivity.this,MainActivity.class);
                 startActivity(intent);
             }
         });

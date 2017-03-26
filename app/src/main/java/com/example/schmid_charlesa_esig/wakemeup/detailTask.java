@@ -32,7 +32,7 @@ public class DetailTask extends AppCompatActivity {
         stopAlarm = (Button)findViewById(R.id.btnDetailTask);
 
         Bundle bundle = getIntent().getExtras();
-        String title = bundle.getString("TaskReReName");
+        String title = bundle.getString("TaskName");
 
         List<TaskData> taskDataList;
 

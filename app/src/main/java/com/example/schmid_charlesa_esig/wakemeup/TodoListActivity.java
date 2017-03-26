@@ -76,12 +76,15 @@ public class TodoListActivity extends AppCompatActivity {
         mHelper = new TodoHelper(this);
         mTodoListView = (ListView) findViewById(R.id.list_todo);
 
-        Bundle bundle = getIntent().getExtras();
-        final String doIAddTheTask =  bundle.getString("addTask");
-        if (doIAddTheTask.equalsIgnoreCase("yes")){
-            openTaskName();
+        if (getIntent().getExtras() != null){
+            Bundle bundle = getIntent().getExtras();
+            final String doIAddTheTask =  bundle.getString("addTask");
+            if (doIAddTheTask.equalsIgnoreCase("yes")){
+                openTaskName();
+            }
+            updateUI();
         }
-        updateUI();
+
     }
     @Override
     public  boolean onCreateOptionsMenu(Menu menu){
