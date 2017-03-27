@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBar;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -143,14 +145,12 @@ public class MainActivity extends AppCompatActivity {
                 });
                 b.setNegativeButton("Supprimer", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        /*PROBLEME*/
-                        View vue =  mTodoListView.findViewById(i) ;
-                        System.out.println("Supprimer" + vue);
-                        //deleteTask(vue) ;
-                        /*FIN PROBLEME*/
+                        TaskData toRemove = taskAdapter.getItem(i);
+
+                        taskAdapter.remove(toRemove);
+                        deleteTask(toRemove.getName(),toRemove.getDesc());
                         taskAdapter.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(), "Removed from list", Toast.LENGTH_SHORT).show();
-
                     }
                 });
 
@@ -158,15 +158,29 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        Comparator<TaskData> comparer = new Comparator<TaskData>() {
+            public int compare(TaskData o1, TaskData o2) {
+                    int heure1 = o1.getHour();
+                    int heure2 = o2.getHour();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        int order = Integer.compare(heure1,heure2);
+                        if (order != 0){
+                            return order;
+                        }else{
+                            int min1 = o1.getMinute();
+                            int min2 = o2.getMinute();
+                            return Integer.compare(min1,min2);
+                        }
+                    }else return heure1-heure2;
+            }
+        };
+        Collections.sort(tasks,comparer);
+        taskAdapter.notifyDataSetChanged();
     }
-    public void deleteTask(View view){
-        View parent = (View) view.getParent();
-        TextView taskTextView = (TextView) parent.findViewById(R.id.todoTitle);
-        TextView taskDescTextView = (TextView) parent.findViewById(R.id.todoDesc);
-        String task = String.valueOf(taskTextView.getText());
-        String taskDesc = String.valueOf(taskDescTextView.getText());
+    public void deleteTask(String nom, String desc){
+
         SQLiteDatabase db = mHelper.getWritableDatabase();
-        db.delete(Todo.TodoEntry.TABLE, Todo.TodoEntry.COL_TASK_TITLE + " = ? AND " + Todo.TodoEntry.COL_TASK_DESC + " = ?", new String[]{task,taskDesc});
+        db.delete(Todo.TodoEntry.TABLE, Todo.TodoEntry.COL_TASK_TITLE + " = ? AND " + Todo.TodoEntry.COL_TASK_DESC + " = ?", new String[]{nom, desc});
         db.close();
         updateUI();
     }

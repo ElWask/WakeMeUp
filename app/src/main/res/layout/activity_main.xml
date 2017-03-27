@@ -8,73 +8,63 @@
     android:transitionGroup="true"
     android:background="@color/colorBackTask">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/app_name"
-        android:id="@+id/logoImg" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/addText"
-        android:textSize="20sp"
-        android:textColor="@color/colorTextTask"
-        android:id="@+id/AlarmPageButton"
-        android:layout_above="@+id/gotoMyList"
-        android:width="190dp"
-        android:height="190dp"
-        android:onClick="gotoAlarm"
-        android:drawableTop="@drawable/alarmclock"
-        android:paddingTop="30dp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/t_ches"
-        android:textSize="20sp"
-        android:textColor="@color/colorTextTask"
-        android:id="@+id/TaskButton"
-        android:layout_above="@+id/gotoTask"
-        android:width="190dp"
-        android:height="190dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="gotoTask"
-
-        android:drawableTop="@drawable/tasks"
-        android:paddingTop="30dp"/>
-
-    <Button
-        android:text="@string/AddTask"
-        android:textSize="20sp"
-        android:textColor="@color/colorTextTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/gotoTask"
-        android:onClick="gotoAddTask"
-        android:width="190dp"
-        android:height="190dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:drawableTop="@drawable/tasks"
-        android:paddingTop="30dp"/>
-    <Button
-        android:text="@string/SeeTaskOfTheDay"
-        android:textSize="20sp"
-        android:textColor="@color/colorTextTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/gotoMyList"
-        android:onClick="gotoTaskOfTheDay"
-        android:width="190dp"
-        android:height="190dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/tableLayout"
         android:layout_alignParentStart="true"
-        android:drawableTop="@drawable/tasks"
-        android:paddingTop="30dp"/>
+        android:layout_alignParentLeft="true"
+        android:id="@+id/listviewMainDay"/>
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:weightSum="3"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tableLayout">
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3" >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="@string/addText"
+                android:textSize="20sp"
+                android:textColor="@color/colorTextTask"
+                android:id="@+id/AlarmPageButton"
+                android:onClick="gotoAlarm"
+                android:drawableTop="@drawable/alarmclock"
+
+                android:paddingTop="20dp"
+                android:layout_weight="1"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="@string/t_ches"
+                android:textSize="20sp"
+                android:textColor="@color/colorTextTask"
+                android:id="@+id/TaskButton"
+                android:onClick="gotoTask"
+                android:drawableTop="@drawable/list"
+                android:paddingTop="20dp"
+                android:layout_weight="1"/>
+            <Button
+                android:text="@string/AddTask"
+                android:textSize="20sp"
+                android:textColor="@color/colorTextTask"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/gotoTask"
+                android:onClick="gotoAddTask"
+                android:drawableTop="@drawable/add"
+                android:paddingTop="20dp"
+                android:layout_weight="1"/>
+
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>

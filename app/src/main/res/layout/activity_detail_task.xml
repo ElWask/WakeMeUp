@@ -11,34 +11,41 @@
     tools:context="com.example.schmid_charlesa_esig.wakemeup.DetailTask">
 
     <TextView
-        android:text="nameTask"
+        android:text="nafsdgfsgsdfgsTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:maxWidth="250sp"
         android:id="@+id/nameTask" />
-
-    <TextView
-        android:text="descTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/nameTask"
-        android:id="@+id/descTask" />
 
     <TextView
         android:text="dateTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/descTask"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@id/nameTask"
+        android:textSize="20sp"
         android:id="@+id/dateTask" />
     <TextView
         android:text="hourTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dateTask"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/nameTask"
+        android:textSize="40sp"
         android:id="@+id/hourTask" />
-    <Button
-        android:text="btnDetailTask"
+    <TextView
+        android:text="descTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/hourTask"
+        android:id="@+id/descTask" />
+    <Button
+        android:text="@string/StopAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descTask"
+        android:textSize="20sp"
         android:id="@+id/btnDetailTask" />
+
 </RelativeLayout>

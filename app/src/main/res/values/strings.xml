@@ -10,6 +10,8 @@
     <string name="legendetext">Veuillez sélectionner une heure</string>
     <string name="AddTask">Ajouter</string>
     <string name="SeeTaskOfTheDay">Aujourd\'hui</string>
-    <string name="addText">Ajouter</string>
+    <string name="addText">Réveil</string>
     <string name="t_ches">Tâches</string>
+    <string name="call">Appeler</string>
+    <string name="StopAlarm">Arrêter l\'alarme</string>
 </resources>

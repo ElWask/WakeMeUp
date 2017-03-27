@@ -35,7 +35,7 @@ public class RingtonePlayingService extends Service {
     boolean isRunning;
     int startID;
     int mId;
-   // static final String url = "http://87.230.101.78:80/top100station.mp3";
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -69,25 +69,6 @@ public class RingtonePlayingService extends Service {
 //        if there is no music playing and we press set Alarm
         if (!this.isRunning && startId ==1 ){
             Log.e("There is no musc ","and you want to start");
-//            String url = "http://87.230.101.78:80/top100station.mp3";
-//            try {
-//                mediaSong.setDataSource(url);
-//            } catch (IllegalArgumentException e) {
-//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-//            } catch (SecurityException e) {
-//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-//            } catch (IllegalStateException e) {
-//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            try {
-//                mediaSong.prepare();
-//            } catch (IllegalStateException e) {
-//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-//            } catch (IOException e) {
-//                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-//            }
 
             mediaSong = MediaPlayer.create(this, R.raw.nyancat);
             mediaSong.start();
@@ -109,18 +90,13 @@ public class RingtonePlayingService extends Service {
                 taskName = "Se réveiller";
                 intentDetailTask = new Intent(this.getApplicationContext(),DayTask.class);
             }
-//Set up pending intent
-            PendingIntent pendingIntentAlarmActivity = PendingIntent.getActivity(this, 0, intentDetailTask,0);
-
 //         Make the notification parameters
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.alarmicon)
                             .setContentTitle(taskName)
                             .setContentText("Vous avez programmé la tache: " + taskName)
-            // Add media control buttons that invoke intents in your media service
-                            .addAction(R.drawable.binarytree, "goTo", pendingIntentAlarmActivity)
-                            .addAction(R.drawable.binarytree, "EndAlarm", pendingIntentAlarmActivity);// #0
+                            .setAutoCancel(true);// #0
 
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
@@ -144,7 +120,7 @@ public class RingtonePlayingService extends Service {
             mNotificationManager.notify(mId, mBuilder.build());
         }
 //      if there is music playing and we press endalarm
-        else if (this.isRunning && startId ==0 ){
+        else if (this.isRunning && startId == 0 ){
             Log.e("There is musc ","and you want to end");
 
 //            stop the ringtone
@@ -156,13 +132,13 @@ public class RingtonePlayingService extends Service {
         }
 //      if the user press random buttons
 //        if there is no music and we press end alam
-        else if (!this.isRunning && startId ==0 ){
+        else if (!this.isRunning && startId == 0 ){
             Log.e("There is no musc ","and you want to start");
             this.isRunning = false;
             this.startID = 0;
         }
 //        if there is music and we press set alarm
-        else if (this.isRunning && startId ==1 ){
+        else if (this.isRunning && startId == 1 ){
             Log.e("There is  musc ","and you want to start");
             System.out.println("music and press alarm");
             this.isRunning = true;

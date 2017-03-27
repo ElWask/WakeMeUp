@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +28,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 //todolist with databse
 import com.example.schmid_charlesa_esig.wakemeup.bdd.Todo;
 import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -255,7 +259,7 @@ public class TodoListActivity extends AppCompatActivity {
 
     public void updateUI() {
         List<TaskData> tasks = genererTasks();
-        TaskAdapter taskAdapter = new TaskAdapter(TodoListActivity.this, tasks);
+        final TaskAdapter taskAdapter = new TaskAdapter(TodoListActivity.this, tasks);
         mTodoListView.setAdapter(taskAdapter);
         taskAdapter.notifyDataSetChanged();
         mTodoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -264,9 +268,41 @@ public class TodoListActivity extends AppCompatActivity {
                 TaskData nameTask = (TaskData) mTodoListView.getItemAtPosition(i);
                 String nameTrans = nameTask.getName();
 
-                Intent intent = new Intent(TodoListActivity.this,SetDetailTaskActivity.class);
+                Intent intent = new Intent(TodoListActivity.this,DetailTask.class);
                 intent.putExtra("TaskName",nameTrans);
                 startActivity(intent);
+            }
+        });
+        mTodoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> adapterView, final View view, final int i, long l) {
+                final AlertDialog.Builder b = new AlertDialog.Builder(TodoListActivity.this);
+                b.setIcon(android.R.drawable.ic_dialog_alert);
+                b.setMessage("Modifier ou supprimer cette tâche ?");
+                b.setPositiveButton("Modifier", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        System.out.println("Modifier");
+                        TaskData nameTask = (TaskData) mTodoListView.getItemAtPosition(i);
+                        String nameTrans = nameTask.getName();
+
+                        Intent intent = new Intent(TodoListActivity.this,SetDetailTaskActivity.class);
+                        intent.putExtra("TaskName",nameTrans);
+                        startActivity(intent);
+                    }
+                });
+                b.setNegativeButton("Supprimer", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        TaskData toRemove = taskAdapter.getItem(i);
+
+                        taskAdapter.remove(toRemove);
+                        deleteTask(toRemove.getName(),toRemove.getDesc());
+                        taskAdapter.notifyDataSetChanged();
+                        Toast.makeText(getApplicationContext(), "Removed from list", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                b.show();
+                return true;
             }
         });
     }
@@ -280,12 +316,10 @@ public class TodoListActivity extends AppCompatActivity {
         return taskDataList;
     }
 
-    public void deleteTask(View view){
-        View parent = (View) view.getParent();
-        TextView taskTextView = (TextView) parent.findViewById(R.id.todoTitle);
-        String task = String.valueOf(taskTextView.getText());
+    public void deleteTask(String nom, String desc){
+
         SQLiteDatabase db = mHelper.getWritableDatabase();
-        db.delete(Todo.TodoEntry.TABLE, Todo.TodoEntry.COL_TASK_TITLE + " = ?", new String[]{task});
+        db.delete(Todo.TodoEntry.TABLE, Todo.TodoEntry.COL_TASK_TITLE + " = ? AND " + Todo.TodoEntry.COL_TASK_DESC + " = ?", new String[]{nom, desc});
         db.close();
         updateUI();
     }
