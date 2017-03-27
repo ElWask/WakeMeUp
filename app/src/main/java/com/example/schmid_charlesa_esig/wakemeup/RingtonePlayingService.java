@@ -25,6 +25,7 @@ import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class RingtonePlayingService extends Service {
     boolean isRunning;
     int startID;
     int mId;
-
+    String taskTodo;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -88,14 +89,36 @@ public class RingtonePlayingService extends Service {
                 intentDetailTask.putExtra("TaskName",title);
             }else{
                 taskName = "Se réveiller";
-                intentDetailTask = new Intent(this.getApplicationContext(),DayTask.class);
+                intentDetailTask = new Intent(this.getApplicationContext(),AlarmActivity.class);
+                Calendar calendar = Calendar.getInstance();
+                List<TaskData> taskDataList;
+                String year = String.valueOf(calendar.get(Calendar.YEAR));
+                String month = String.valueOf(calendar.get(Calendar.MONTH));
+                String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+                taskDataList = TodoHelper.getAllUserDataWithDay(year,month,day);
+                for (int i=0;i<taskDataList.size();i++){
+                    taskTodo += String.valueOf(taskDataList.get(i).getName());
+                }
+
+                System.out.println(taskTodo+"______________________-_____________01");
             }
 //         Make the notification parameters
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.alarmicon)
                             .setContentTitle(taskName)
-                            .setContentText("Vous avez programmé la tache: " + taskName)
+                            .setContentText(
+                                    "Vous avez programmé la tache: " + taskName + "\n" +
+                            "Aujourdui vous devez : ")
+                            .setDefaults(Notification.DEFAULT_ALL) // requires VIBRATE permission
+
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText("Vous avez programmé la tache: "
+                                            + taskName + "\n"
+                                            + "Aujourdui vous devez : \n"
+                                            +taskTodo
+                                    )
+                            )
                             .setAutoCancel(true);// #0
 
 // The stack builder object will contain an artificial back stack for the

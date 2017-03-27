@@ -28,18 +28,10 @@ public class AlarmActivity extends AppCompatActivity {
     Intent myIntent;
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menualarm,menu);
-        return true;
-    }
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.parameters:
-                startActivity(new Intent(this,MainActivity.class));
-                return true;
             case android.R.id.home:
+                startActivity(new Intent(this,MainActivity.class));
                 finish();
             default:
                 return super.onOptionsItemSelected(item);
@@ -90,7 +82,7 @@ public class AlarmActivity extends AppCompatActivity {
                     minuteS = "0" + String.valueOf(minute);
                 }
 //
-                updateText("Alarm set to : " + hourS + ":" + minuteS);
+                updateText("Alarme programée pour : " + hourS + ":" + minuteS);
 
 //                put extra string in monintent to say we press the set alarm
                 monIntent.putExtra("extra","alarm on");
@@ -110,7 +102,7 @@ public class AlarmActivity extends AppCompatActivity {
                 //        Create a pending intent that delays the intent until the time asked
                 pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0 , monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                updateText("Alarm disabled");
+                updateText("Alarme désactivée");
                 alarmManager.cancel(pendingIntent);
 //                say we press the end alarm
                 monIntent.putExtra("extra","alarm off");

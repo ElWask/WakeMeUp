@@ -61,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra("addTask","no");
         startActivity(i);
     }
-    public void gotoTaskOfTheDay(View view){
-
-        Intent i = new Intent(this,DayTask.class);
-        startActivity(i);
-    }
     public void gotoAlarm(View view){
 
         Intent i = new Intent(this,AlarmActivity.class);
@@ -80,10 +75,14 @@ public class MainActivity extends AppCompatActivity {
         //DBAdapter.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         gotoAlarm=(Button)findViewById(R.id.AlarmPageButton);
         logoImg = (ImageView)findViewById(R.id.logoImg);
 
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setTitle("Voici vos tâches du jour");
+           // ab.setSubtitle("Voici vos tâches du jour");
+        }
         // todolist with database
         mHelper = new TodoHelper(this);
         mTodoListView = (ListView) findViewById(R.id.listviewMainDay);
