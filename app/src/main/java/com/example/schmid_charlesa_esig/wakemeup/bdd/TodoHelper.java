@@ -177,7 +177,6 @@ public class TodoHelper extends SQLiteOpenHelper{
     }
 
 
-
     /*********** Initialize database *************/
     public static void init(Context context) {
         if (todoHelper == null) {

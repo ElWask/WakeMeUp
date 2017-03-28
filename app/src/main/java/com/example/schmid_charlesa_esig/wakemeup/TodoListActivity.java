@@ -126,7 +126,6 @@ public class TodoListActivity extends AppCompatActivity {
         buttonBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("LOL");
                 // contact
                 pickContact();
             }
@@ -297,7 +296,7 @@ public class TodoListActivity extends AppCompatActivity {
                         taskAdapter.remove(toRemove);
                         deleteTask(toRemove.getName(),toRemove.getDesc());
                         taskAdapter.notifyDataSetChanged();
-                        Toast.makeText(getApplicationContext(), "Removed from list", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Tâche supprimée de la liste", Toast.LENGTH_SHORT).show();
                     }
                 });
 

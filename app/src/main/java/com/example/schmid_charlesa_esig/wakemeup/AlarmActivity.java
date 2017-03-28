@@ -86,6 +86,7 @@ public class AlarmActivity extends AppCompatActivity {
 
 //                put extra string in monintent to say we press the set alarm
                 monIntent.putExtra("extra","alarm on");
+                monIntent.putExtra("taskNameTrans","Se réveiller");
 //        Create a pending intent that delays the intent until the time asked
                 pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0, monIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 //        set the alarm manager

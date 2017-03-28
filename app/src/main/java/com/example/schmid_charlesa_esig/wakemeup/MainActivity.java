@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                         taskAdapter.remove(toRemove);
                         deleteTask(toRemove.getName(),toRemove.getDesc());
                         taskAdapter.notifyDataSetChanged();
-                        Toast.makeText(getApplicationContext(), "Removed from list", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Tâche supprimée de la liste", Toast.LENGTH_SHORT).show();
                     }
                 });
 
