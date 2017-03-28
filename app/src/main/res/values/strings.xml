@@ -15,4 +15,9 @@
     <string name="call">Appeler</string>
     <string name="StopAlarm">Arrêter l\'alarme</string>
     <string name="app_main">Vos tâches de la journée</string>
+    <string name="editTask">Modifier la tâche</string>
+    <string name="deuxpoints">:</string>
+    <string name="slash">/</string>
+    <string name="enter_text">Enter Text</string>
+    <string name="text_to_speech">Text to Speech</string>
 </resources>

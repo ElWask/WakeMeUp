@@ -5,7 +5,7 @@ import android.app.Application;
 /**
  * Created by SCHMID_CHARLESA-ESIG on 08.02.2017.
  */
-
+// class prototype
 public class GlobalVar extends Application {
 
     private static String varNameUser = "Lustucru";

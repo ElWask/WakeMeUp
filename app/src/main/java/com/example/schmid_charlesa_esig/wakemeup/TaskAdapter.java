@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TaskAdapter extends ArrayAdapter<TaskData> {
 
-    //tweets est la liste des models à afficher
+    //task est la liste des models à afficher
     public TaskAdapter(Context context, List<TaskData> task) {
         super(context, 0, task);
     }

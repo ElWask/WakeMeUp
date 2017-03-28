@@ -1,12 +1,8 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
-import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -30,22 +26,22 @@ public class DetailTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_task);
 
+//      back button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
+//      find button
         name = (TextView) findViewById(R.id.nameTask);
         desc = (TextView) findViewById(R.id.descTask);
         date = (TextView) findViewById(R.id.dateTask);
         hour = (TextView) findViewById(R.id.hourTask);
         stopAlarm = (Button) findViewById(R.id.btnDetailTask);
-
+//      task name transfered
         Bundle bundle = getIntent().getExtras();
         String title = bundle.getString("TaskName");
 
         List<TaskData> taskDataList;
-
         taskDataList = TodoHelper.getAllUserDataWhenName(title);
 
         int rightMonth = taskDataList.get(0).getMonth() + 1;
@@ -84,6 +80,7 @@ public class DetailTask extends AppCompatActivity {
             }
         });
     }
+//    back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();

@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +24,7 @@ public class AlarmActivity extends AppCompatActivity {
     Context context;
     PendingIntent pendingIntent;
     Intent myIntent;
+    int secret;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -44,13 +43,13 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
         this.context = this;
-
+        secret=0;
         // retour button
         if (getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-//        Initalise alarm mana
+//        Initalise alarm manager
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 //        initialise our timepicker
         timePicker = (TimePicker) findViewById(R.id.timePicker);
@@ -109,6 +108,12 @@ public class AlarmActivity extends AppCompatActivity {
                 monIntent.putExtra("extra","alarm off");
 //                stop the ringtone
                 sendBroadcast(monIntent);
+
+                secret++;
+                System.out.println(secret);
+                if (secret==7){
+                    gotoRobot();
+                }
             }
         });
 
@@ -117,5 +122,10 @@ public class AlarmActivity extends AppCompatActivity {
     }
     private void updateText(String s) {
         updateText.setText(s);
+    }
+    //    Go to the tts prototype
+    public void gotoRobot(){
+        Intent i = new Intent(getApplicationContext(),TalkToMe.class);
+        startActivity(i);
     }
 }

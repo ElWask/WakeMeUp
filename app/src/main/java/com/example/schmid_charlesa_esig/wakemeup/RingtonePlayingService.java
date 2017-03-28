@@ -1,16 +1,11 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
-import android.annotation.TargetApi;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -18,13 +13,9 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -85,9 +76,8 @@ public class RingtonePlayingService extends Service {
             String stylePers = "";
             List<TaskData> taskDataList;
             taskDataList = TodoHelper.getAllUserDataWhenName(title);
-            if (taskDataList.get(0) != null) {
+            if (taskDataList != null) {
                 if (title != null) {
-                    System.out.println(title + "____________________________________");
                     if (!title.equals("Se réveiller")) {
                         taskName = String.valueOf(taskDataList.get(0).getName());
                         //        set up the intent that goes to the alarm activity
@@ -148,6 +138,8 @@ public class RingtonePlayingService extends Service {
 // mId allows you to update the notification later on.
                     mNotificationManager.notify(mId, mBuilder.build());
                 }
+            }else{
+                System.out.println("Supprimée");
             }
         }
 //      if there is music playing and we press endalarm

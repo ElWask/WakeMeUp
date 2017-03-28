@@ -52,19 +52,14 @@ public class TodoListActivity extends AppCompatActivity {
     static String getDayTask;
     static String getHourTask;
     static String getMinTask;
-    //todolist with databse
 
+    //todolist with database
     private TodoHelper mHelper;
     private ListView mTodoListView;
 
     //to have different alarm
     static int REQUEST_CODE;
-    // Request code for READ_CONTACTS. It can be any number > 0.
-    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final int RESULT_PICK_CONTACT = 1;
-    private static final int PICK_CONTACT = 100;
-    //to add a contact
-    Intent intentContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -216,8 +211,6 @@ public class TodoListActivity extends AppCompatActivity {
     private void contactPicked(Intent data) {
         Cursor cursor = null;
         try {
-            String phoneNo = null;
-            String name = null;
             Uri uri = data.getData();
             cursor = getContentResolver().query(uri, null, null, null, null);
             cursor.moveToFirst();

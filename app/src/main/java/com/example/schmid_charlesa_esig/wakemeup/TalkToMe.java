@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Locale;
-
+// protoype class not used for now(28.03.2017)
 public class TalkToMe extends AppCompatActivity {
     TextToSpeech textToSpeech;
     EditText textToRead;

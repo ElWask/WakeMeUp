@@ -19,11 +19,12 @@ public class SetDetailTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_detail_task);
-
+//      get the name trans
         Bundle bundle = getIntent().getExtras();
         final String nameTransfered =  bundle.getString("TaskName");
 
         System.out.println(bundle+"/" + nameTransfered);
+//        get the form from layout
         nameTask = (EditText)findViewById(R.id.setnameTask);
         descTask = (EditText)findViewById(R.id.setdescTask);
         yearTask = (EditText)findViewById(R.id.setyearTask);
@@ -32,7 +33,7 @@ public class SetDetailTaskActivity extends AppCompatActivity {
         hourTask = (EditText)findViewById(R.id.sethourTask);
         minuteTask = (EditText)findViewById(R.id.setminuteTask);
         edit = (Button)findViewById(R.id.btnDetailTask);
-
+//      list
         List<TaskData> taskDataList;
         taskDataList = TodoHelper.getAllUserDataWhenName(nameTransfered);
         int rightMonth =  taskDataList.get(0).getMonth() + 1;
@@ -44,7 +45,7 @@ public class SetDetailTaskActivity extends AppCompatActivity {
         dayTask.setText(String.valueOf(taskDataList.get(0).getDay()));
         hourTask.setText(String.valueOf(taskDataList.get(0).getHour()));
         minuteTask.setText(String.valueOf(taskDataList.get(0).getMinute()));
-
+//edit the task
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

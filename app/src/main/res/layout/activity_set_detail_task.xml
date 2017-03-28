@@ -10,26 +10,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.schmid_charlesa_esig.wakemeup.SetDetailTaskActivity">
     <EditText
-        android:text="setnameTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/setnameTask" />
+        android:id="@+id/setnameTask"
+        android:inputType="text" />
 
     <EditText
-        android:text="setdescTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/setnameTask"
-        android:id="@+id/setdescTask" />
+        android:id="@+id/setdescTask"
+        android:inputType="text" />
 
     <EditText
-        android:text="dd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/setdescTask"
-        android:id="@+id/setdayTask" />
+        android:id="@+id/setdayTask"
+        android:inputType="number" />
     <TextView
-        android:text="/"
+        android:text="@string/slash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/setdayTask"
@@ -37,15 +37,15 @@
         android:layout_below="@id/setdescTask"
         android:id="@+id/slasher1"/>
     <EditText
-        android:text="MM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/slasher1"
         android:layout_toEndOf="@id/slasher1"
         android:layout_below="@id/setdescTask"
-        android:id="@+id/setmonthTask" />
+        android:id="@+id/setmonthTask"
+        android:inputType="number" />
     <TextView
-        android:text="/"
+        android:text="@string/slash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/setmonthTask"
@@ -53,21 +53,21 @@
         android:layout_below="@id/setdescTask"
         android:id="@+id/slasher2"/>
     <EditText
-        android:text="YYYY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/setdescTask"
         android:layout_toRightOf="@id/slasher2"
         android:layout_toEndOf="@id/slasher2"
-        android:id="@+id/setyearTask" />
+        android:id="@+id/setyearTask"
+        android:inputType="number" />
     <EditText
-        android:text="hh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/setyearTask"
-        android:id="@+id/sethourTask" />
+        android:id="@+id/sethourTask"
+        android:inputType="number" />
     <TextView
-        android:text=":"
+        android:text="@string/deuxpoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/sethourTask"
@@ -75,15 +75,15 @@
         android:layout_below="@id/setyearTask"
         android:id="@+id/deuxpoints"/>
     <EditText
-        android:text="mm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/deuxpoints"
         android:layout_toEndOf="@id/deuxpoints"
         android:layout_below="@id/setyearTask"
-        android:id="@+id/setminuteTask" />
+        android:id="@+id/setminuteTask"
+        android:inputType="number" />
     <Button
-        android:text="btnDetailTask"
+        android:text="@string/editTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/sethourTask"

@@ -16,15 +16,14 @@
         android:id="@+id/todoDesc"
         android:layout_below="@id/todoTitle"
         android:visibility="invisible"
-        android:text="desc"
         android:textSize="0sp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/todoDate"
+        android:layout_alignBaseline="@id/todoTitle"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="DateOfDay"
         android:textSize="15sp" />
 
     <TextView
@@ -34,6 +33,5 @@
         android:layout_below="@id/todoDate"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="Heure"
         android:textSize="30sp"/>
 </RelativeLayout>

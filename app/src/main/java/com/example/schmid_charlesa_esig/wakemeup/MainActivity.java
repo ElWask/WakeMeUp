@@ -1,18 +1,14 @@
 package com.example.schmid_charlesa_esig.wakemeup;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -21,54 +17,47 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.schmid_charlesa_esig.wakemeup.bdd.Todo;
 import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
 
-import static com.example.schmid_charlesa_esig.wakemeup.TodoListActivity.getDescTask;
-import static com.example.schmid_charlesa_esig.wakemeup.TodoListActivity.getTitleTask;
-
 
 public class MainActivity extends AppCompatActivity {
     Button gotoAlarm;
     ImageView logoImg;
+    int secret;
     //todolist with databse
-
     private TodoHelper mHelper;
     private ListView mTodoListView;
     Calendar calendar = Calendar.getInstance();
+//    Add a task button with see all task
     public void gotoAddTask(View view){
 
         Intent i = new Intent(this,TodoListActivity.class);
         i.putExtra("addTask","yes");
         startActivity(i);
     }
+//    See all task
     public void gotoTask(View view){
 
         Intent i = new Intent(this,TodoListActivity.class);
         i.putExtra("addTask","no");
         startActivity(i);
     }
+//    Add an alarm
     public void gotoAlarm(View view){
 
         Intent i = new Intent(this,AlarmActivity.class);
         startActivity(i);
-    }
-    public void gotoRobot(View view){
-                Intent i = new Intent(getApplicationContext(),TalkToMe.class);
-                startActivity(i);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
         // todolist with database
         mHelper = new TodoHelper(this);
         mTodoListView = (ListView) findViewById(R.id.listviewMainDay);
-        updateUI();
-
-
     }
 
     @Override
@@ -97,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
         super.onResume();
     }
-
+// genere les taches selon le jour
     public List<TaskData> genererTasks() {
 
         List<TaskData> taskDataList;
