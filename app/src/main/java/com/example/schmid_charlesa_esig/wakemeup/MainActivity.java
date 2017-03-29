@@ -33,8 +33,7 @@ import com.example.schmid_charlesa_esig.wakemeup.bdd.TodoHelper;
 
 public class MainActivity extends AppCompatActivity {
     Button gotoAlarm;
-    ImageView logoImg;
-    int secret;
+
     //todolist with databse
     private TodoHelper mHelper;
     private ListView mTodoListView;
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gotoAlarm=(Button)findViewById(R.id.AlarmPageButton);
-        logoImg = (ImageView)findViewById(R.id.logoImg);
 
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -133,7 +131,9 @@ public class MainActivity extends AppCompatActivity {
                         TaskData toRemove = taskAdapter.getItem(i);
 
                         taskAdapter.remove(toRemove);
-                        deleteTask(toRemove.getName(),toRemove.getDesc());
+                        if (toRemove != null) {
+                            deleteTask(toRemove.getName(),toRemove.getDesc());
+                        }
                         taskAdapter.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(), "Tâche supprimée de la liste", Toast.LENGTH_SHORT).show();
                     }

@@ -93,13 +93,12 @@ public class RingtonePlayingService extends Service {
                         String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
                         taskDataList = TodoHelper.getAllUserDataWithDay(year, month, day);
                         //                Merci à Diego Ruiz Torres
-                        taskTodo = "";
+                        taskTodo = "Aujourdui vous devez : \n";
                         for (int i = 0; i < taskDataList.size(); i++) {
                             taskTodo = taskTodo + String.valueOf(taskDataList.get(i).getName()) + "\n";
                         }
                         stylePers = "Vous avez programmé la tache: \n"
                                 + taskName + "\n"
-                                + "Aujourdui vous devez : \n"
                                 + taskTodo + "\n";
                     }
                     Log.d("app", "f : " + taskTodo);
@@ -108,8 +107,6 @@ public class RingtonePlayingService extends Service {
                             new NotificationCompat.Builder(this)
                                     .setSmallIcon(R.drawable.alarmicon)
                                     .setContentTitle(taskName)
-                                    .setContentText(
-                                            "Vous avez programmé la tache: " + taskName + "\n")
                                     .setDefaults(Notification.DEFAULT_ALL) // requires VIBRATE permission
 
                                     .setStyle(new NotificationCompat.BigTextStyle()
