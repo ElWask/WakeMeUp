@@ -18,6 +18,6 @@
     <string name="editTask">Modifier la tâche</string>
     <string name="deuxpoints">:</string>
     <string name="slash">/</string>
-    <string name="enter_text">Enter Text</string>
+    <string name="enter_text">Ecrire du texte</string>
     <string name="text_to_speech">Text to Speech</string>
 </resources>

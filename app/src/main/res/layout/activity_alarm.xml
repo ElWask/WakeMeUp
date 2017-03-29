@@ -20,6 +20,8 @@
         android:headerBackground="@color/colorTextTask"/>
 
     <Button
+
+        android:layout_marginTop="@dimen/septantedp"
         android:text="@string/buttonSetAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,9 +30,14 @@
         android:layout_alignParentStart="true"
         android:background="@drawable/rounded_buttonmain"
         android:textColor="@color/colorTextTask"
-        android:id="@+id/setAlarm"/>
+        android:id="@+id/setAlarm"
+        android:padding="@dimen/vingtdp"
+        android:height="@dimen/soixantedp"
+        android:layout_above="@+id/updateText" />
 
     <Button
+
+        android:layout_marginTop="@dimen/septantedp"
         android:text="@string/buttonEndAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,9 +46,12 @@
         android:layout_alignParentEnd="true"
         android:background="@drawable/rounded_buttonmain"
         android:textColor="@color/colorTextTask"
+        android:padding="@dimen/vingtdp"
+        android:height="@dimen/soixantedp"
         android:id="@+id/endAlarm"/>
 
     <TextView
+        android:layout_marginTop="@dimen/vingtdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/endAlarm"

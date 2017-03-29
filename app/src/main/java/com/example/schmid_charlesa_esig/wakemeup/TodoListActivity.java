@@ -248,7 +248,7 @@ public class TodoListActivity extends AppCompatActivity {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
-
+// Huge thanks to the stackhoverflow community to answer to my problem http://stackoverflow.com/questions/42888043/click-on-an-item-on-listview-doesnt-work/42888112#42888112
     public void updateUI() {
         List<TaskData> tasks = genererTasks();
         final TaskAdapter taskAdapter = new TaskAdapter(TodoListActivity.this, tasks);

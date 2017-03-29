@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * Created by SCHMID_CHARLESA-ESIG on 30.01.2017.
+ * Huge thanks to Anna Xu
  */
 public class RingtonePlayingService extends Service {
     MediaPlayer mediaSong;
@@ -107,7 +108,7 @@ public class RingtonePlayingService extends Service {
                             new NotificationCompat.Builder(this)
                                     .setSmallIcon(R.drawable.alarmicon)
                                     .setContentTitle(taskName)
-                                    .setDefaults(Notification.DEFAULT_ALL) // requires VIBRATE permission
+                                    .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000}) // requires VIBRATE permission
 
                                     .setStyle(new NotificationCompat.BigTextStyle()
                                             .bigText(stylePers)

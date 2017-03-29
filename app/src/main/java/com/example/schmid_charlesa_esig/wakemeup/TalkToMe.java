@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 // protoype class not used for now(28.03.2017)
+// Merci à https://www.tutorialspoint.com/android/android_text_to_speech.htm
 public class TalkToMe extends AppCompatActivity {
     TextToSpeech textToSpeech;
     EditText textToRead;

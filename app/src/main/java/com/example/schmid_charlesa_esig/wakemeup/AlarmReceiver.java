@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Created by SCHMID_CHARLESA-ESIG on 30.01.2017.
  */
-
+// Anna xu
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

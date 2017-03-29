@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-
+//Merci à Anna Xu pour son tutoriel de création d'alarme https://www.youtube.com/watch?v=xbBlzOblD10
 public class AlarmActivity extends AppCompatActivity {
     AlarmManager alarmManager;
     TimePicker timePicker;

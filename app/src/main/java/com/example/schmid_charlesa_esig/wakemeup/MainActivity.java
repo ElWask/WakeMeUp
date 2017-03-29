@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+//        Merci à Joffrey Duc
         Comparator<TaskData> comparer = new Comparator<TaskData>() {
             public int compare(TaskData o1, TaskData o2) {
                     int heure1 = o1.getHour();
@@ -169,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         db.close();
         updateUI();
     }
+//    Merci à Martin et Maven http://stackoverflow.com/questions/12013416/is-there-any-way-in-android-to-force-open-a-link-to-open-in-chrome
     public void openChrome(){
         String url = "https://github.com/ElWask/WakeMeUp";
         try {
