@@ -1,2 +1,8 @@
-"# WakeMeUp"  initgit add README.mdgit commit -m "first commit"git remote add origin https://github.com/ElWask/WakeMeUp.gitgit push -u origin master
-"# WakeMeUp"  initgit add README.mdgit commit -m "first commit"git remote add origin https://github.com/ElWask/WakeMeUp.gitgit push -u origin master
+HELLO & WELCOME ☺
+This page is dedicated to the open source mobile application named WakeMeUp
+
+This project is constantly in progress
+The features are : 
+  - Program an alarm that will show us the day's task
+  - Program a task with a title, a description and a contact
+  - Hidden part textToSpeech
